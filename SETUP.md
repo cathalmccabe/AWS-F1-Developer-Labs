@@ -25,25 +25,25 @@ If you have not received that email, please contact an Xilinx event staff member
 
 #### Start a preconfigured EC2 F1 instance
 
-- Open the above mentionned email containing your connection credentials.
-- Click on the link to your preconfigured instance. 
+1. Open the above mentionned email containing your connection credentials.
+1. Click on the link to your preconfigured instance. 
   - You will be asked to sign-in before accessing your instance in the AWS EC2 Console.
-- In the AWS sign-in page, enter the **Account ID** which was emailed to you
-- Click **Next**.
-- Enter the following credentials:
+1. In the AWS sign-in page, enter the **Account ID** which was emailed to you
+1. Click **Next**.
+1. Enter the following credentials:
   - IAM user name: *IAM user name provided in the email**
   - Password: ******** _(provided at the event)_
-- Click **Sign In**.
+1. Click **Sign In**.
 
-You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
+  You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
 
-- Start the instance by choosing the **Actions** button, then select **Instance State** and then **Start**.
+1. Start the instance by choosing the **Actions** button, then select **Instance State** and then **Start**.
 
-![Start](./images/setup_lab/start1.png?raw=true)
+  ![Start](./images/setup_lab/start1.png?raw=true)
 
-Allow about 10 seconds for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
+  Allow about 10 seconds for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
 
-- Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
+1. Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
   - You will be using this IP address to connect to the instance.
   - The **IPv4 Public IP** address is found in the bottom pane of the EC2 Console, in the right column of the **Description** tab.
 
@@ -51,59 +51,59 @@ Allow about 10 seconds for the instance to start. If needed, click the **Refresh
 
 The instance you just started is preconfigured with remote desktop protocol (RDP) services.
 
-- From your local machine, start a remote desktop protocol client
+1. From your local machine, start a remote desktop protocol client
    - On Windows: press the Windows key and type "remote desktop".
       - You should see the "Remote Desktop Connection" in the list of programs.
       - Alternatively you simply also type mstsc.exe from the Window run prompt.
    - On Linux: RDP clients such a Remmina or Vinagre are suitable.
    - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
 
-- In the RDP client, enter the **IPv4 Public IP** of your instance.
+1. In the RDP client, enter the **IPv4 Public IP** of your instance.
 
-- **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth**
+1. **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth**
   - On Windows: Click Options, then select the Display tab and set Colors to True Colors (24 bit)
 
-- Click **Connect**. This should bring up a message about connection certificates. 
+1. Click **Connect**. This should bring up a message about connection certificates. 
 
-- Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt.
+1. Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt.
 
-- Login with the following credentials:
+1. Login with the following credentials:
    - User: **centos**
    - Password: ******** _(provided at the event)_
    
     ![Remote](./images/setup_lab/remote1.png?raw=true)
    
-- Click **Ok**.
+1. Click **Ok**.
 
 You should now be connected to the instance.
 
 #### Open the lab instructions on the remote F1 instance
 
-* Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
+1. Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
   - Note: if a "keyring" popup comes up, click **Cancel**. 
 
-* Continue following the lab instructions from within the remote instance
+1. Continue following the lab instructions from within the remote instance
   - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
 
 #### Configure the Xilinx SDAccel environment and load the workshop files
 
-* Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**.
+1. Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**.
 
-* In the terminal, `git clone` the SC17_Developer_Lab repository to download the files for the Xilinx Developer Lab.
+1. In the terminal, `git clone` the SC17_Developer_Lab repository to download the files for the Xilinx Developer Lab.
 
-```bash  
-cd /home/centos
-git clone https://github.com/Xilinx/SC17_Developer_Lab.git
-```
+  ```bash  
+  cd /home/centos
+  git clone https://github.com/Xilinx/SC17_Developer_Lab.git
+  ```
 
-* Source the SDAccel environment. 
+1. Source the SDAccel environment. 
 
-```bash  
-cd ~/aws-fpga
-source sdaccel_setup.sh
-source $XILINX_SDX/settings64.sh 
-```
+  ```bash  
+  cd ~/aws-fpga
+  source sdaccel_setup.sh
+  source $XILINX_SDX/settings64.sh 
+  ```
 
   *Note: the sdaccel_setup.sh script might generate warning messages, but these can be safely ignored.*
 
@@ -112,62 +112,62 @@ source $XILINX_SDX/settings64.sh
 
 The hello world example is an OpenCL application with a simple vector-addition accelerator. This example uses a precompiled FPGA binary to reduce compilation time and streamline the lab.
 
-*  Compile the host application
-```bash
-# Go to the example directory
-cd ~/SC17_Developer_Lab/helloworld_ocl
+1.  Compile the host application
+  ```bash
+  # Go to the example directory
+  cd ~/SC17_Developer_Lab/helloworld_ocl
 
-# Compile the host application (./helloworld)
-make TARGETS=hw DEVICES=$AWS_PLATFORM exe
-```
+  # Compile the host application (./helloworld)
+  make TARGETS=hw DEVICES=$AWS_PLATFORM exe
+  ```
 
-* Confirm the presence of the precompiled FPGA binary.
-```bash
-ls -la ./xclbin/vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin
-```
+1. Confirm the presence of the precompiled FPGA binary.
+  ```bash
+  ls -la ./xclbin/vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin
+  ```
 
-* Execute the host application with the precompiled FPGA binary on the F1 instance.
-```bash
-sudo sh
-source /opt/Xilinx/SDx/2017.1.rte/setup.sh
-./helloworld
-```
+1. Execute the host application with the precompiled FPGA binary on the F1 instance.
+  ```bash
+  sudo sh
+  source /opt/Xilinx/SDx/2017.1.rte/setup.sh
+  ./helloworld
+  ```
 
-* A successful outcome looks as follows:
-```
-Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
-xclProbe found 1 FPGA slots with XDMA driver running
-platform Name: Xilinx
-Vendor Name : Xilinx
-Found Platform
-Found Device=xilinx:aws-vu9p-f1:4ddr-xpr-2pr:4.0
-XCLBIN File Name: vector_addition
-INFO: Importing ./vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin
-Loading: './vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin'
-Result =
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
-TEST PASSED
-sh-4.2#
-```
+1. A successful outcome looks as follows:
+  ```shell
+  Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
+  xclProbe found 1 FPGA slots with XDMA driver running
+  platform Name: Xilinx
+  Vendor Name : Xilinx
+  Found Platform
+  Found Device=xilinx:aws-vu9p-f1:4ddr-xpr-2pr:4.0
+  XCLBIN File Name: vector_addition
+  INFO: Importing ./vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin
+  Loading: './vector_addition.hw.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.awsxclbin'
+  Result =
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+  TEST PASSED
+  sh-4.2#
+  ```
 
-You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
+  You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
 
-* Close your terminal
+1. Close your terminal
 ```bash
 exit
 exit
