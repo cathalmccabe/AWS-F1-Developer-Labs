@@ -27,7 +27,7 @@ For this event, each registered participant should have received an email with t
 - IAM username
 - Link to access a preconfigured EC2 F1 instance
 
-**If you have not received that email, please contact a staff member at the beginning of the lab session.**
+If you have not received that email, please contact an Xilinx event staff member.
 
 Follow these steps to access and start your preconfigured F1 instance:
 
