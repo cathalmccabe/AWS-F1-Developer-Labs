@@ -16,22 +16,16 @@
 
 In this module you will start a pre-configured EC2 F1 instance and connect to it using a remote desktop client. Once connected, you will download the lab files and confirm you can execute a simple application on F1.
 
-#### Start a preconfigured EC2 F1 instance
-
-For this event, each registered participant has been attributed a preconfigured EC2 F1 instance and login credentials.
-
-You should have received an email with an account ID, a user name ("user" followed by a number) and a web link to access an EC2 F1 instance.
-
-For this event, each registered participant should have received an email with the following details:
+For this event, each registered participant has been attributed a preconfigured EC2 F1 instance and should have received an email with the following details:
 - Account ID
 - IAM username
 - Link to access a preconfigured EC2 F1 instance
 
 If you have not received that email, please contact an Xilinx event staff member.
 
-Follow these steps to access and start your preconfigured F1 instance:
+#### Start a preconfigured EC2 F1 instance
 
-- Open the email containing your connection credentials.
+- Open the above mentionned email containing your connection credentials.
 - Click on the link to your preconfigured instance. 
   - You will be asked to sign-in before accessing your instance in the AWS EC2 Console.
 - In the AWS sign-in page, enter the **Account ID** which was emailed to you
@@ -41,7 +35,7 @@ Follow these steps to access and start your preconfigured F1 instance:
   - Password: ******** _(provided at the event)_
 - Click **Sign In**.
 
-You should now be logged in the AWS EC2 Console and you should see one EC2 F1 instance in the stopped state.
+You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
 
 - Start the instance by choosing the **Actions** button, then select **Instance State** and then **Start**.
 
@@ -49,9 +43,9 @@ You should now be logged in the AWS EC2 Console and you should see one EC2 F1 in
 
 Allow about 10 seconds for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
 
-- Once the instance is running, find and note the **public IP address** of your instance.
+- Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
   - You will be using this IP address to connect to the instance.
-  - The **public IP address** is found in the bottom pane of the EC2 Console, on the right side of the **Description** tab.
+  - The **IPv4 Public IP** address is found in the bottom pane of the EC2 Console, in the right column of the **Description** tab.
 
 #### Connect to your instance using a remote desktop client
 
@@ -59,20 +53,21 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
 
 - From your local machine, start a remote desktop protocol client
    - On Windows: press the Windows key and type "remote desktop".
-    - You should see the "Remote Desktop Connection" in the list of programs.
-    - Alternatively you simply also type mstsc.exe from the Window run prompt.
+      - You should see the "Remote Desktop Connection" in the list of programs.
+      - Alternatively you simply also type mstsc.exe from the Window run prompt.
    - On Linux: RDP clients such a Remmina or Vinagre are suitable.
    - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
 
-- **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth** (Option->Display tab for Windows Remote Desktop).
+- In the RDP client, enter the **IPv4 Public IP** of your instance.
 
-- In the RDP client, enter the **public IP address** you see in the **Description** tab, in the lower part of the **AWS Console Management** web page.
+- **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth**
+  - On Windows: Click Options, then select the Display tab and set Colors to True Colors (24 bit)
 
 - Click **Connect**. This should bring up a message about connection certificates. 
 
-- Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt..
+- Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt.
 
-- **Login** with the following credentials:
+- Login with the following credentials:
    - User: **centos**
    - Password: ******** _(provided at the event)_
    
