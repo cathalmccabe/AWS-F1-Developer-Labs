@@ -35,7 +35,7 @@ Please also note that although the entire tutorial is performed on an F1 instanc
     source $XILINX_SDX/settings64.sh 
     cd ~
     ```
-    *Note: the setup might create some warning messages regarding missing libraries but these can be safely ignored.*
+	*Note: the sdaccel_setup.sh script might generate warning messages, but these can be safely ignored.*
 
 
 1. Launch the SDAccel and open the predefined workspace containing the IDCT project: 
