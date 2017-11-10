@@ -82,6 +82,12 @@ The encoder will finish with a message similar to this one: \
 | duration                  | 55.6 sec     | 9.6 sec |
 | compressed file size      | 19.9 Mb      | 17.5 Mb |
 
+* Close your terminal to conclude this module.
+```bash
+exit
+exit
+```
+
 #### Conclusion
 
 AWS F1 instances with Xilinx FPGAs can provide significant performance improvements over CPUs. The HEVC encoder running on F1 is **5.7x** faster than the libx265 codec running on the CPU. It also provides better compression without sacrificing quality.
