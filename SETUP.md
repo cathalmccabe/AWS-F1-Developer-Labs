@@ -64,7 +64,7 @@ You should now be connected to the instance.
 
 #### Open the lab instructions on the remote F1 instance
 
-* Double click on the Chromium browser icon, it opens to the lab instructions.
+* Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
   - Note: if a "keyring" popup comes up, click **Cancel**. 
   - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
