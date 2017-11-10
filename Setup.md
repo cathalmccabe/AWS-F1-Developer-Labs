@@ -49,27 +49,31 @@ The instance just started is preconfigured with remote desktop protocol (RDP) se
    - On Linux: any RDP client such a Remmina or Vinagre are suitable
    - On macOS: Microsoft Remote Desktop from the Mac App Store
 - Set your remote desktop client to use **24-bit for color depth** (Option->Display tab for Windows Remote Desktop).
-- In the RDP client, enter the **public IP address** you see in the lower part of the AWS Console Management web page
-- Click **Connect**
-This should bring up a message about connection certificates. 
-- Click **Yes** to proceed.
-The Remote Desktop Connection window opens with a login prompt. 
+- In the RDP client, enter the **public IP address** you see in the **Description** tab, in the lower part of the **AWS Console Management** web page.
+- Click **Connect**. This should bring up a message about connection certificates. 
+- Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt..
 - **Login** with the following credentials:
    - User: **centos**
    - Password: ******** _(provided at the event)_
    
     ![Remote](./images/setup_lab/remote1.png?raw=true)
    
-- Click **Ok**
+- Click **Ok**.
+
 You should now be connected to the instance.
+
+#### Open the lab instructions on the remote F1 instance
+
+* Double click on the Chromium browser icon, it opens to the lab instructions.
+  - Note: if a "keyring" popup comes up, click **Cancel**. 
+  - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
+
 
 #### Configure the Xilinx SDAccel environment and load the workshop files
 
-* Double click on the Chromium browser icon, it opens to the Lab instructions (if a "keyring" popup comes up, click **Cancel**).  We suggest you **perform all your copy-paste from instructions to shell within the RDP session** to avoid issues.
-
 * Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**.
 
-* In the shell, execute the following commands to setup the SDAccel environment and `git clone` the necessary lab files.
+* In the termnial shell, execute the following commands to setup the SDAccel environment and `git clone` the necessary lab files.
 
 ```bash  
 cd /home/centos
