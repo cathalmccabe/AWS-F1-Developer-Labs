@@ -18,40 +18,60 @@ In this module you will start a pre-configured EC2 F1 instance and connect to it
 
 #### Start a preconfigured EC2 F1 instance
 
-For this event, each participant has been attributed an EC2 F1 instance, and login credentials.
+For this event, each registered participant has been attributed a preconfigured EC2 F1 instance and login credentials.
 
-You should have received an email that provides you with an account ID, a user name ("user" followed by a number) and a web link to access an EC2 F1 instance.
-```
-If you have not received that email, please contact a staff member at the beginning of the lab session.
-```
-- Click on that link, it points to the AWS EC2 console management page.
-- Enter the **Account ID** from the email.
+You should have received an email with an account ID, a user name ("user" followed by a number) and a web link to access an EC2 F1 instance.
+
+For this event, each registered participant should have received an email with the following details:
+- Account ID
+- IAM username
+- Link to access a preconfigured EC2 F1 instance
+
+**If you have not received that email, please contact a staff member at the beginning of the lab session.**
+
+Follow these steps to access and start your preconfigured F1 instance:
+
+- Open the email containing your connection credentials.
+- Click on the link to your preconfigured instance. 
+  - You will be asked to sign-in before accessing your instance in the AWS EC2 Console.
+- In the AWS sign-in page, enter the **Account ID** which was emailed to you
 - Click **Next**.
-- Enter the IAM **user** from the email.
-- Enter the password communicated by the staff.
+- Enter the following credentials:
+  - IAM user name: *IAM user name provided in the email**
+  - Password: ******** _(provided at the event)_
 - Click **Sign In**.
 
-You should see one stopped EC2 F1 instance.
+You should now be logged in the AWS EC2 Console and you should see one EC2 F1 instance in the stopped state.
+
 - Start the instance by choosing the **Actions** button, then select **Instance State** and then **Start**.
 
 ![Start](./images/setup_lab/start1.png?raw=true)
 
-Allow some time for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 dashboard to update the instance status information.
+Allow about 10 seconds for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
 
-Once the instance is running, the EC2 console gives you information relative to the **public IP address** of the instance which we will be using in the next step.
+- Once the instance is running, find and note the **public IP address** of your instance.
+  - You will be using this IP address to connect to the instance.
+  - The **public IP address** is found in the bottom pane of the EC2 Console, on the right side of the **Description** tab.
 
-#### \"Remote desktop\" to the instance
+#### Connect to your instance using a remote desktop client
 
-The instance just started is preconfigured with remote desktop protocol (RDP) services.
+The instance you just started is preconfigured with remote desktop protocol (RDP) services.
+
 - From your local machine, start a remote desktop protocol client
-   - On Windows: press the Windows key and type "remote desktop".  You should see the "Remote Desktop Connection" show in the list of programs.  Alternatively you could also directly invoke mstsc.exe.
-  
-   - On Linux: any RDP client such a Remmina or Vinagre are suitable
-   - On macOS: Microsoft Remote Desktop from the Mac App Store
-- Set your remote desktop client to use **24-bit for color depth** (Option->Display tab for Windows Remote Desktop).
+   - On Windows: press the Windows key and type "remote desktop".
+    - You should see the "Remote Desktop Connection" in the list of programs.
+    - Alternatively you simply also type mstsc.exe from the Window run prompt.
+   - On Linux: RDP clients such a Remmina or Vinagre are suitable.
+   - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
+
+- **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth** (Option->Display tab for Windows Remote Desktop).
+
 - In the RDP client, enter the **public IP address** you see in the **Description** tab, in the lower part of the **AWS Console Management** web page.
+
 - Click **Connect**. This should bring up a message about connection certificates. 
+
 - Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt..
+
 - **Login** with the following credentials:
    - User: **centos**
    - Password: ******** _(provided at the event)_
@@ -66,6 +86,7 @@ You should now be connected to the instance.
 
 * Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
   - Note: if a "keyring" popup comes up, click **Cancel**. 
+
 * Continue following the lab instructions from within the remote instance
   - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
@@ -74,13 +95,17 @@ You should now be connected to the instance.
 
 * Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**.
 
-* In the termnial shell, execute the following commands to setup the SDAccel environment and `git clone` the necessary lab files.
+* In the terminal, `git clone` the SC17_Developer_Lab repository to download the files for the Xilinx Developer Lab.
 
 ```bash  
 cd /home/centos
 git clone https://github.com/Xilinx/SC17_Developer_Lab.git
-export AWS_FPGA_REPO_DIR=/home/centos/aws-fpga
-cd $AWS_FPGA_REPO_DIR
+```
+
+* Source the SDAccel environment. 
+
+```bash  
+cd ~/aws-fpga
 source sdaccel_setup.sh
 source $XILINX_SDX/settings64.sh 
 ```
@@ -88,7 +113,7 @@ source $XILINX_SDX/settings64.sh
   *Note: the sdaccel_setup.sh script might generate warning messages, but these can be safely ignored.*
 
 
-#### Run the hello_world example to confirm the setup of your F1 instance
+#### Run the hello_world example to validate the setup of your F1 instance
 
 The hello world example is an OpenCL application with a simple vector-addition accelerator. This example uses a precompiled FPGA binary to reduce compilation time and streamline the lab.
 
