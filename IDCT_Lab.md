@@ -1,66 +1,63 @@
+<table style="width:100%">
+  <tr>
+    <th width="100%" colspan="5"><h2>SC17 Xilinx Developer Lab</h2></th>
+  </tr>
+  <tr>
+    <td width="20%" align="center"><a href="README.md">Introduction</a></td>
+    <td width="20%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
+    <td width="20%" align="center"><a href="FFMPEG_Lab.md">2. Experiencing F1 acceleration</a></td>
+    <td width="20%" align="center"><b>3. Developing F1 applications</b></td>
+    <td width="20%" align="center"><a href="WRAP_UP.md">4. Wrapping-up</td>
+  </tr>
+</table>
+	
+---------------------------------------
+	
+### Developing, profiling and optimizing F1 applications with SDAccel
 
-# IDCT Lab
+This tutorial is designed to teach the fundamentals of the SDAccel development environment and programming model. This includes: familiarizing with OpenCL, understanding software and hardware emulation flows, profiling performance and identifying how to optimize host and kernel code. 
 
-## Contents
-1. [Introduction](#Introduction)
-1. [Environment Configuration and Workspace Setup](#Setup)
-1. [Overview of Source Code](#CodeOverview)
-1. [Run Emulations](#Emulation)
-1. [Analyzing the Reports](#Analyzing)
-1. [Optimization](#Optimization)
-1. [Executing on F1](#Executing-on-F1)
-1. [Conclusion](#Conclusion)
-1. [References](#References)
+The kernel used in this tutorial is an Inverse Discrete Cosine Transform (IDCT), a function widely used in audio/image codecs such as HEVC. 
 
-<a name="Introduction"></a>
-## Introduction  
-This tutorial is designed to help teach the basics of the SDAccel development process. Areas covered include running software and hardware emulation and report analysis to help identify how to optimize code on the host and kernel side. Additionally, at the end of the tutorial, various links are provided to resources which provide details on various aspects of optimizing kernel code for projects.
+To simplify this tutorial, a workspace preloaded with the initial project configuration is provided in the lab repository.
 
-The design is an Inverse Discrete Cosine Transform, which is used heavily in audio/image processing and is based off of the Fourier Transform. 
+Please also note that although the entire tutorial is performed on an F1 instance, only the final step of this tutorial really needs to be run on F1. All the interactive development, profiling and optimization steps would normally be performed on-premise or on a cost-effective AWS EC2 instance such as C4. However, to avoid switching from C4 to F1 instances during this tutorial, all the steps are performed on the F1 instance.
 
- 
-<a name="Setup"></a>
-## Environment Configuration and Workspace Setup
-
-Before the SDAccel tool suite can be started, the environment needs to be configured. Follow these steps:
+### Starting SDAccel
 
 1.  Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**. 
 
-1.  Change into the ~/aws-fpga directory and source “sdaccel_setup.sh”  
+1.  Source the SDAccel environment  
 
-    ```
+    ```bash
     cd ~/aws-fpga
     source sdaccel_setup.sh
     source $XILINX_SDX/settings64.sh 
-	cd ~
+    cd ~
     ```
-    The setup might create some warning messages regarding missing libraries but these can be safely ignored.
+    *Note: the setup might create some warning messages regarding missing libraries but these can be safely ignored.*
 
-1. Launch SDx with the command: 
-    ```
-    sdx
-    ```
-	
-1. The **Eclipse Launcher** will start up displaying the workspace directory menu. This allows you to select the location of your workspace (and projects). To simplify this tutorial, a workspace directory containing the basic configuration for this example design is already included in the lab repository. To select this directory as workspace, we select **Browse...** and navigate to **/home/centos/SC17_Developer_Lab/workspace**. After clicking **OK** the **Eclipse Launcher** should read:  
-    ![](./idctFigures/WorkspaceSetup.PNG)  
-    Click **OK** to confirm the selection. Please press **Wait** in the system warning, if loading the Eclipse environment takes longer than expected.  
-	
-	The provided workspace:
-	* Defines the new project with the name **IDCT**
-	* Has the project associated with the AWS platform from the aws-fpga platform directory 
-	* Includes the host (**idct.cpp**) and kernel (**krnl_idct.cpp**) source files
-	* Defines the name of the xclbin container as **binary_container_1**
-	* Defines the **krnl_idct** function to be the top hardware function in the xclbin container
-    * Maps the ports of the **krnl_idct** function to utilize two different DDR memories; one for reads and one for writes. 
-	* Adds the xclbin container to be the first argument provided to the executable.
 
-	Most of this information is displayed on the **SDX Project Settings** window.  
+1. Launch the SDAccel and open the predefined workspace containing the IDCT project: 
+    ```bash
+    sdx -workspace /home/centos/SC17_Developer_Lab/workspace
+    ```
+	*Note: a warning message may appear if loading Eclipse takes longer than expected. Click **Wait** to dismiss it.*
+
+	The predefined workspace takes care of the following setup steps:
+	* Creating a new project called **IDCT**
+	* Adding the AWS-VU9P-F1 platform to the project and selecting it as the target for this project 
+	* Importing the host (**idct.cpp**) and kernel (**krnl_idct.cpp**) source files
+	* Setting the name of the FPGA binary container as **binary_container_1**
+	* Setting the **krnl_idct** function to be a custom hardware function (also referred to as kernel).
+	* Mapping the ports of the **krnl_idct** kernel to two different DDR memories; one for reads and one for writes. 
+	* Setting **binary_container_1** to be the first argument passed to the host application when it is executed.	
+
+	Most of this information is displayed in the **SDX Project Settings** window which is prominently displayed in the center of the GUI. It indicates the project name (**IDCT**), the selected platform (**AWS-VU9-F1**) and the FPGA binary container (**binary_container_1**) with the hardware function (**krnl_idct**).  
  
-    ![](./idctFigures/SDxWindows.PNG)
+    ![](./images/idct_lab/SDxWindows.PNG)
 
-1. The SDx Project Settings window is prominently displayed in the center of the GUI. It states the project name, the selected platform (**AWS-VU9-F1**) and the xclbin container (**binary_container_1**) with the top level kernel function (**krnl_idct**).  
-
-    The following is a brief description of the different sections of the default GUI elements (see above for reference):
+1. Familiarize yourself with the different sections of the GUI layout:
     * The **main menu** bar is located on the top. This menu bar allows direct access to all general project setup and GUI window management tasks. As most tasks are performed through the different setup windows, the main menu is mostly used to recover from accidently closed windows or to access the tool help.
     * Directly below the main menu bar is the **SDAccel toolbar**.  This provides access to the most common tasks in a project. From left to right, these are: File Management functions (new, save, save all), Configuration Management, Build, Build All, Start Debug, and Run. Most buttons have a default behavior as well as pulldowns.
     * The **Project Explorer** window occupies the top left hand side of the GUI. This window is used to manage and navigate through project files. In the expanded **src** folder you should be able to see the source files of the project. 
@@ -69,104 +66,124 @@ Before the SDAccel tool suite can be started, the environment needs to be config
     * In the bottom left section is the **Reports window**. This allows easy access to all reports generated by SDAccel. 
     * The remaining windows along the bottom of the main window accommodate the various consoles and terminals which contain output information relating to individual SDAccel executables. Typical output examples are compilation errors or the tool output when running.  
 
-<a name="CodeOverview"></a>
-## Overview of Source Code  
+### Overview of the source code used in this example
 
-As mentioned earlier, two files are used to fully code this design. The **idct.cpp** contains the code running on the CPU (host), while the file **krnl_idct.cpp** contains the accelerator code running on the FPGA (kernel).
+1. Expand the **src** directory in the **Project Explorer**. 
+	The project is comprised of two files:
+	* **idct.cpp** contains the code for the host application running on the CPU.
+	* **krnl_idct.cpp** contains the code for the kernel (custom accelerator) running on the FPGA.
 
-1. Open the kernel file by double clicking the icon **Project Explorer -&gt; src -&gt; krnl_idct.cpp**.  
+1. Open the **krnl_idct.cpp** file.
 
-    ![](./idctFigures/OutlineKrnl.PNG)
+1. Locate the **Outline** viewer located on the right side of the GUI. 
+	* This view provides a convenient way of looking-up and navigating the code hierarchy. 
+	* Each green dot in the **Outline** viewer corresponds to a function in the selected source file. 
 
-    The green dots in the **Outline** viewer (above) allows for rapidly lookup of the functions. Here is a brief description of the individual functions ordered with respect to the call hierarchy.
-	* **idct_kernel**: Is the top level function dedicated to be implemented in hardware. It is used in this example to specify the interface properties.
-	* **krnl_idct_dataflow**: Top level implementation function encapsulating the basic implementation blocks.
-	* **read_blocks**: Responsible for mapping the AXI interface to hls::streams.
-	* **write_blocks**: Responsible for mapping from the output hls::stream to the output AXI interface.
-    * **execute**: Performs the actual IDCT computation. It iterates over the number of blocks transmitted and calls the IDCT on each 8x8 matrix.
-	* **idct**: Modified version of the idct algorithm to facilitate good hardware implementation.
-	* **reg**: Helper function to guide HLS synthesis flow.
+    ![](./images/idct_lab/OutlineKrnl.PNG)
+
+1. In the **Outline** viewer, click **idct** to look-up this function. 
+	* The **idct** function is the core algorithm implemented in the custom hardware accelerator.
+	* This computationally heavy function can be highly parallelized on the FPGA, providing significant acceleration over a CPU-based implementation.
+
+1. Using the **Outline** viewer, quickly look-up and inspect the other important functions of the accelerator:
+	* The **krnl_idct** function is the top-level for the custom hardware accelerator. Interface properties for the accelerator are specified in this function.
+	* The **krnl_idct_dataflow** function is called by the top-level function and encapsulates the main functions of the accelerator.
+	* The **read_blocks** function reads from global memory values sent by the host application and streams them to the **execute** function.
+	* The **execute** function receives the streaming data and, for each 8x8 block received, calls the **idct** function to perform the actual computation. Streams the results back out.
+	* The **write_blocks** function receives the streaming results from the **execute** function and writes them back to global memory for the host application.
 	
-1. Open the host file **idct.cpp** by double clicking the file at the bottom in **Project Explorer**.  
+1. Open the **idct.cpp** file (from the **src** folder of the **Project Explorer** view).  
 
-    ![](./idctFigures/OutlineHost.PNG)
+1. Again, use the **Outline** viewer quickly look-up and inspect the main functions of the host application:
+	* The **main** function of the C++ program initializes the test vectors, sets-up OpenCL, runs the reference model, runs the hardware accelerator, releases the OpenCL resources, and compares the results of the reference IDCT model with the accelerator implementation.
+	* The **runFPGA** function takes in a vector of inputs and, for each 8x8 block, calls the hardware accelerated IDCT using the **write**, **run**, **read**, and **finish** helper functions. These function use OpenCL API calls to communicate with the FPGA and are covered in greater detail later in this tutorial.
+	* The **runCPU** function takes in a vector of inputs and, for each 8x8 block, calls **idctSoft**, a reference implementation of the IDCT .
+	* The **idctSoft** function is the reference software implementation of the IDCT algorithm, used in this example to check the results coming back from the FPGA. 	
+	* The **oclDct** class is used to encapsulate the OpenCL runtime calls to interact with the kernel in the FPGA. 
+	* The **aligned_allocator**, **smalloc**, **load_file_to_memory**, and **getBinaryName** functions are small helper functions used during test vector generation and OpenCL setup.
 
-    Again, use the **Outline** viewer to rapidly visit the different functions:
-	* **main**: The C++ Main function. It initializes the test vectors, performs the OpenCL Host Code Setup (see next section), runs the software model, runs the accelerator implementation, releases the OpenCL resources, and compares the IDCT results of the software model with the accelerator implementation. In the end, if the model isn't emulated, statistics regarding the wall clock execution time are printed.
-    * **runCPU**: This function calls the software idct for each 8x8 block.
-	* **idctSoft**: Original code implementing the IDCT algorithm in software. 
-	* **runFPGA**: This function calls the wrapper functions around the runtime OpenCL functions. These **write**, **run**, **read**, and **finish** functions are explained later in greater detail when focusing on the host code optimization. 
-	* **oclDct**: This class is used to encapsulate the OpenCL runtime interface calls. In addition to the already mentioned ones, it provides a **constructor**, **destructor**, and initialization (**init**) method. 
-	* **aligned_allocator**, **smalloc**, **load_file_to_memory**, and **getBinaryName** are small helper functions used during test vector generation and OpenCL Host Code Setup.
+1. Go to line 580 of the **idct.cpp** file by pressing **Ctrl+L** and entering **580**. 
 
-<a name="Init"></a>
-### OpenCL Host Initialization  
+	This section of code is where the OpenCL environment is setup in the host application. This section is typical of most SDAccel application and will look very familiar to developers with prior OpenCL experience. This body of code can often be reused as-is from project to project. 
 
-Before we start looking at the details of the kernel and host implementation of this example, it is worthwhile to briefly have a look at the OpenCL setup steps in the host. This code is very similar between SDAccel projects and might often only vary in the error handling. Towards that end, please open the **idct.cpp** file from the **Project Explorer** and search for the line (Ctrl+L 580):
+	To setup the OpenCL environment, the following API calls are made:
 
-``` C
-  // *********** OpenCL Host Code Setup **********
-```
+	* **clGetPlatformIDs**: This function queries the system to identify the different OpenCL platforms. It is called twice as it first extracts the number of platforms before extracting the actual supported platforms.
+	* **clGetPlatformInfo**: Get specific information about the OpenCL platform, such as vendor name and platform name.
+	* **clGetDeviceIDs**: Obtain list of devices available on a platform.
+	* **clCreateContext**: Creates an OpenCL context, which manages the runtime objects.
+	* **clGetDeviceInfo**: Get information about an OpenCL device like the device name.
+	* **clCreateProgramWithBinary**: Creates a program object for a context, and loads specified binary data into the program object. The actual program is obtained before this call through the load_file_to memory function.
+	* **clCreateKernel**: Creates a kernel object.
+	* **clCreateCommandQueue**: Create a command-queue on a specific device.
 
-People familiar with OpenCL should be very familiar with these steps. All of these interface functions are documented by the OpenCL maintainer [(Khronos group)](https://www.khronos.org). In the code, the following OpenCL calls are made.
+	Note: all objects accessed through a **clCreate...** function call are to be released before terminating the program by calling **clRelease...**. This avoids memory leakage and clears the locks on the device.
 
-* **clGetPlatformIDs**: This function queries the system to identify the different OpenCL platforms. It is called twice as it first extracts the number of platforms before extracting the actual supported platforms.
-* **clGetPlatformInfo**: Get specific information about the OpenCL platform, such as vendor name and platform name.
-* **clGetDeviceIDs**: Obtain list of devices available on a platform.
-* **clCreateContext**: Creates an OpenCL context, which manages the runtime objects.
-* **clGetDeviceInfo**: Get information about an OpenCL device like the device name.
-* **clCreateProgramWithBinary**: Creates a program object for a context, and loads specified binary data into the program object. The actual program is obtained before this call through the load_file_to memory function.
-* **clCreateKernel**: Creates a kernel object.
-* **clCreateCommandQueue**: Create a command-queue on a specific device.
+	All of the above API functions are documented by the [Khronos Group](https://www.khronos.org), the mainteners of OpenCL, the open standard for parallel programming of heterogeneous systems
 
-Note, all objects accessed through a **clCreate...** function call are to be released before terminating the program by calling **clRelease...**. This avoids memory leakage and clears the locks on the device.
+### Running the Emulation Flows
 
-Talk about overall structure host, kernel...
+SDAccel provides two emulation flows which allow testing the application before deploying it on the F1 instance. The flows are referred to as software emulation (or Emulation-CPU) and hardware emulation (or Emulation-HW), respectively.
+* Software emulation is used to identify syntax issues and verify the behavior of application.
+* Hardware emulation is used to get performance estimates for the accelerated application.
 
-<a name="Emulation"></a>
-## Run Emulations (Software/Hardware)  
+SDAccel uses Makefiles to perform incremental compilation of the project. This means that unless file changes require the recompilation of the host code or of the kernel code, no compilation is performed.
 
-This section demonstrates the software/hardware emulation flow. 
+1. In the upper right corner of the **SDx Project Settings** window, the **Active build configuration** is shown. Ensure that **Emulation-CPU** is selected.
 
-The project is now setup and ready for compilation and emulation. The SDx environment uses Makefiles to perform incremental compilation of the project. This means that unless file changes require the recompilation of the host code or of the kernel code, no compilation is performed.
+1. Click the **Run** button ![](./images/idct_lab/RunButton.PNG) to run software emulation.
 
-1. In the upper right corner of the **SDx Project Settings** window, the **Active build configuration** is shown. Ensure that **“Emulation-CPU”** is selected.  
+	* In software emulation, both the host code and the kernel code are compiled to run on the x86 processor. 
+	* This allows iterative algorithm refinement through fast build and run loops.
+	* The **Console** provides the detailed build log during the compilation of the kernel and the host code. It then displays the standard output produced by the application during the actual emulation run.  
+	* The software emulation is complete when the following messages are displayed at the bottom of the **Console**:
 
-1. To run software emulation for the design, click the **Run** button, ![](./idctFigures/RunButton.PNG).
-
-    CPU-Emulation is used to verify the algorithm and identify syntax issues. The C/C++ kernel and host code is compiled before execution of the code emulates the designs overall behavior. Notice that the **Console** has a detailed build log of the compilation of the kernel and the host code. Once the build is complete, an output console will display the standard output the application produces.  
+	```
+	TEST PASSED
+	RUN COMPLETE
+	```	
 	
-1. In the **SDx Project Settings** window, change the **Active build configuration** to **Emulation-HW**.
+1. Return to the **SDx Project Settings** by clicking on **project.sdx** in the **Project Explorer** window (left side of the GUI).
+	
+1. In the **SDx Project Settings**, change the **Active build configuration** to **Emulation-HW**.
 
-    Now the project is set for running a more detailed emulation compared to the software emulation. In this emulation mode the actual Register Transfer Logic (RTL) generated from the C/C++ Kernel description is simulated and run together with the host code application. 
+1. Click the **Run** button again or click **Ctrl+F11** to build and run the hardware emulation flow.
 
-1. Click the **Run** button again.
+	* In hardware emulation, the host code is compiled to run on the x86 processor and the kernel code is compiled into a hardware model (known as RTL or Register Transfer Level) which is run in a special simulator.
+	* The build and run cycle takes longer because the kernel code is compiled into a detailed hardware model which is slower to simulate.
+	* The more detailed hardware simulation allow more accurate reporting of kernel and system performance.
+	* This flow is also useful for testing the functionality of the logic that will go in the FPGA.
+	* The hardware emulation is complete when the following messages are displayed at the bottom of the **Console**:
+	
+	```
+	TEST PASSED
+	RUN COMPLETE
+	```
 
-    The runtime of the Hardware emulation will take longer than the
-Software Emulation because the kernel code is being compiled to create
-a more detailed simulation model. The more detailed simulation
-models allow more accurate reporting of kernel performance in
-comparison to software emulation. This step should be used in helping
-identifying performance issues of the design.
-
-The next section will focus on analyzing the reports produced by the emulation runs. 
-
-<a name="Analyzing"></a>
-## Analyzing the Reports  
+### Analyzing the Reports  
 
 This section covers how to locate and read the various reports generated by the emulation runs. The goal of the section is to understand the analysis reports of SDAccel before utilizing them in the next section.  
-    ![](./idctFigures/Reports.PNG)
 
-1. The **Reports** window displays a tree layout of folders and reports for all runs and open projects (see above). The top level shows the **IDCT** project for which we have executed two runs (**Emulation-CPU** and **Emulation-HW**).
+1. Locate the **Reports** window in the bottom-left corner of the GUI. 
+	* This window displays a tree layout of folders and reports for all runs and open projects. 
+	* The top level shows the **IDCT** project for which we have executed two runs: **Emulation-CPU** and **Emulation-HW**.
 
-    Expanding the **Emulation-CPU** folder shows the **IDCT-Default** run configuration. Running this configuration created a **Profile Summary** and **Application Timeline** report. 
+    ![](./images/idct_lab/Reports.PNG)
 
-    Similarly, the **Emulation-HW** folder contains all reports created with this build configuration. As this configuration performs High-Level Synthesis under the hood, first estimates regarding the performance of the actual hardware implementation are available. These are summarized in **System Estimate**. The full output of the High-Level Synthesis run (**HLS Report**) is located in the **binary_container_1 -&gt; krnl_idct** subhierarchy. Similar to the emulation-cpu flow, the run configuration **IDCT-Default** also produced a **Profile Summary** and an **Application Timeline** report.
+1. Look into the **Emulation-CPU** folder. 
+	* The **IDCT-Default** run configuration folder contains the **Profile Summary** and **Application Timeline** report generated during the software emulation run.
 
-1. Open the **Emulation-CPU Profile Summary** by double clicking the icon (see below).  
-    ![](./idctFigures/SWProfile.PNG) 
+1. Look into the **Emulation-HW** folder.
+	* The **IDCT-Default** run configuration folder contains the **Profile Summary** and **Application Timeline** report generated during the hardware emulation run.
+	* The **binary_container_1** folder contains the **HLS Report** from the compilation of the C++ kernel into the detailled hardware model (RTL). This compilation step is often referred to as High Level Synthesis or HLS.
 
-    This report provides data related to how the application runs. Notice that the report has four tabs: **Top Operations**, **Kernels & Compute Units**, **Data Transfers**, and **OpenCL APIs**. Click through and study each of the tabs and become familiar with the data they show. Following is a summary of each:
+1. Open the **Profile Summary** report from the **Emulation-CPU** run. 
+
+    ![](./images/idct_lab/SWProfile.PNG) 
+
+    This report provides data related to how the application runs. Notice that the report has four tabs at the bottom: **Top Operations**, **Kernels & Compute Units**, **Data Transfers**, and **OpenCL APIs**. 
+    
+    Click through and inspect each of the tabs:
 
     * **Top Operations**: Shows all the major top operations of memory transfer between the host and kernel to global memory, and kernel execution. This allows you to identify throughput bottlenecks when transferring data. Efficient transfer of data to the kernel/host allows for faster execution times.
     
@@ -176,140 +193,198 @@ This section covers how to locate and read the various reports generated by the 
     
     * **OpenCL APIs**: Shows all the OpenCL API command executions, how many time each was executed, and how long they take to execute.
 
-1. Open the **Application Timeline** report by double clicking the icon in the **Emulation-CPU** hierarchy.
-    ![](./idctFigures/SWTimeline.PNG)
-	
-    As the above image shows, the **Application Timeline** shows a visual representation of the execution time of the **OpenCL APIs**. It illustrates, in what order the APIs execute across the emulation threads.  
+1. Open the **Application Timeline** report from the **Emulation-CPU** run. 
+
+    ![](./images/idct_lab/SWTimeline.PNG)	
+       
+    The **Application Timeline** collects and displays host and device events on a common timeline to help you understand and visualize the overall health and performance of your systems. These events include OpenCL API calls from the host code: when they happen and how long each of them takes.
     
+1. Open the **Profile Summary** from the **Emulation-HW** run.
 
-1. Open the **HLS Report** of the **Emulation-HW** run, by double clicking on the icon.  
+    ![](./images/idct_lab/HWProfile.PNG)
 
-    ![](./idctFigures/HLSReport.PNG)
+1. Locate the **Profile Rule Checks** section at the bottom of the **Profile Summary** 
+    - **Profile Rule Checks** (PRCs) interpret profiling results and suggest areas for performance improvements.
+    - PRCs compare profiling results to threshold values. If a check does not meet the threshold value, the right hand column provides guidance on how to improve performance.
+    - PRCs work for both hardware emulation and system runs on the FPGA.
 
-    The **HLS Report** (above) is specific to the kernel code, and how it translates to the platform. It contains information about clocking, resources, device utilization, and more. For the purpose of this tutorial, the only section of this report to pay attention to is the **Performance Estimates**. This section provides information on the latency of the kernel, as well as loop implementation details.  
-
-1. To establish a baseline, please note the following data from the **HLS Report -&gt; Performance Estimates** section:
-
-    - Latency (min/max):
-    - Interval (min/max):
-	
-1. Focus in on the **HLS Report** of the **krnl_idct_dataflow** function (select **krnl_idct_dataflow** from module list).  
-
-    This provides detailed information for a specific module in the synthesized hierarchy.
- 	
-1. Expand the (**Performance Estimates -&gt; Latency -&gt; Detail -&gt; Instance**) part of the report.  
-    ![](./idctFigures/LatencyKrnlIdctDataflow2.PNG)
-	
-	The table illustrates the latency and interval numbers of each instance contained in the **krnl_idct_dataflow** function. This information will be utilized for optimization in the next section. 
-
-1. Open the **Profile Summary** of the **Emulation-HW** run (double click icon).
-
-    ![](./idctFigures/HWProfile.PNG)
-
-    Notice that compared to the CPU emulation, the hardware emulation displays more data as well as a **Profile Rule Checks** section. This section provides information relating to the overall design performance. Profile rules examine the profile data and compare them to general threshold values. If a check does not meet the threshold value, the right hand column provides guidance on how to improve design performance.
-
-1. Click on the **Kernels & Compute Units** tab of the report and locate the **Kernel Total Time**.
+1. Click on the **Kernels & Compute Units** tab of the **Profile Summary** report, locate and note the following numbers:
 
     - Kernel Total Time (ms):
 
-    Note this number as another reference point to compare after optimization.
-
-1. Click **X** on each of the report tabs to close the windows.
-
-This concludes the introduction to the SDAccel GUI Analysis capabilities. The next section will focus on some of the performance aspects of the current implementation and how they can be improved.  
-
-<a name="Optimization"></a>
-## Optimization   
-
-In the previous section you familiarized with the SDAccel Performance Analysis capabilities. The next stage is to utilize the analysis capabilities to determine results of kernel optimization procedures. This example will deal with DATAFLOW optimization on for the accelerator and software pipelining on the host side.
-
-<a name="KernelOpt"></a>
-### Kernel Optimization  
-
-1. Open the kernel file **krnl_idct.cpp** by double clicking the file at the bottom in **Project Explorer**.  
-
-    This allows us to take another closer look of the C++ source code implementation. At the end of the file is the krnl_idct top function which is used to separate the HLS interface pragmas from the actual kernel definition function (krnl_idct_dataflow) for readability. The krnl_idct_dataflow function contains four blocks:
-
-    * Two read_blocks responsible for mapping the AXI interface to a data stream
- 
-    * One write_block responsible for mapping from the data stream to the output AXI interface
- 
-    * One execute block which contains the IDCT computation
-
-    The execute function performs multiple idct computations per kernel execution. The actual number is provided to the kernel as an argument. Each computation is prepended by reading the wide input data streams and filling the 8x8 matrix, and similarly post processed by writing into the wide output streams. 
+    This number will serve as reference point to compare against after optimization.    
     
-    **Note:** The coefficients of the read operation are read only once as they are considered constant for all idct computations.
+1. Open the **HLS Report** from the **Emulation-HW** run.
 
-1. In the previous section we identified that the critical path through the **krnl_idct_dataflow** function (read, execute, write) have roughly the same latency numbers. In addition the three functions are communicating through FIFO (hls::streams). This is the recommended coding style which should be used whenever possible to exhibit streaming behavior and allow DATAFLOW optimization.
+    - The **HLS Report** is explains the results of compiling the kernel into hardware. It contains many details (including clocking, resources or device utilization) about the performance and logic usage of the custom-generated hardware logic. These details provide many insights to guide the kernel optimization process.    
+    
+    - For the needs of this tutorial, we will focus on the **Performance Estimates** section located in the middle of the main **Synthesis** tab. This section provides information on the latency of the kernel, as well as loop implementation details.  
 
-1. To enable dataflow optimization, just uncomment the **pragma DATAFLOW** already present in the krnl_idct_dataflow function. Also comment out the three **pragma HLS stream** statements from the function.
-	
-    The dataflow optimization allows each of these functions to execute as independent processes. This results in overlapping and pipelined execution of the three functions instead of sequential execution. Therefore, the FIFO channels between the different processes do not need to buffer the complete dataset anymore but can directly stream the data to the next block. 
+1. In the left pane of the **HLS Report**, select the **krnl_idct_dataflow** function.
 
-1. Save the file (Ctrl-S), and click ![](./idctFigures/BuildButton.PNG) to rebuild the **Emulation-HW** configuration of the project.
+    ![](./images/idct_lab/LatencyKrnlIdctDataflow3.PNG)
 
-1. This results in the following new HLS Report (**Emulation-HW -&gt; binary_container_1 -&gt; krnl_idct -&gt; HLS Report).
-    ![](./idctFigures/EndHLSReport.PNG)	
+1. In the **Performance Estimates** section, locate the **Latency (clock cycles) > Summary** table and note the following numbers:
 
-   Compare the new latency numbers reported in the **Performance Estimates** section with the previous numbers and you will note considerable improvement based on the DATAFLOW optimization.  
     - Latency (min/max):
     - Interval (min/max):
 
-1. Run the Hardware Emulation flow by clicking the run button, ![](./idctFigures/RunButton.PNG). Open the **Emulation-HW -&gt; Profile Summary** and select the tab **Kernels & Compute Units**.  
+	The numbers will serve as a baseline for comparison against optimized versions of the kernel.
 
-    ![](./idctFigures/EndProfileSummary.PNG)
+1. Under the **Summary** table, locate and expand the **Latency (clock cycles) > Detail > Instance** sub-section.
 
-    Compare the **Kernel Total Time (ms)** with the results from the unoptimized run.
+	* Note that the 3 sub-functions read, execute and write have roughly the same latency and that their sum total is equivalent to the total Interval reported in the **Summary** table. 
+	* This indicates that the three sub-functions are executing sequentially, hinting to an optimization opportunity.
+
+1. Close all the reports by clicking the **X** in each of the report tabs.
+ 
+
+### Optimization   
+
+The previous section explained the SDAccel performance analysis capabilities. The next stage is to utilize these analysis capabilities to drive and measure code optimizations. This tutorial illustrates the DATAFLOW optimization for the kernel and software pipelining for the host application.
+
+
+### Kernel Optimization  
+
+Looking at the **HLS Report**, we identified that the read, execute and write functions of the **krnl_idct_dataflow** function have roughly the same latency and are executing sequentially. We still start by focusing on this performance aspect.
+
+1. Open **krnl_idct.cpp** file (from the **Project Explorer** window).  
+
+1. Using the **Outline** viewer, navigate to the **krnl_idct_dataflow** function.
+
+1. Observe that the three functions are communicating using `hls::streams` objects. These objects model a FIFO-based communication scheme. This is the recommended coding style which should be used whenever possible to exhibit streaming behavior and allow DATAFLOW optimization.
+
+1. Enable the DATAFLOW optimization by uncommenting the **#pragma DATAFLOW** present in the **krnl_idct_dataflow** function (line 322). 
 	
-<a name="HostOpt"></a>
+    - The DATAFLOW optimization allows each of the subsequent functions to execute as independent processes. 
+    - This results in overlapping and pipelined execution of the read, execute and write functions instead of sequential execution.
+    - The FIFO channels between the different processes do not need to buffer the complete dataset anymore but can directly stream the data to the next block. 
+
+1. Comment out the three **#pragma HLS stream** statements on lines 327, 328 and 329.
+
+1. Save the file (**Ctrl-S**).
+
+1. Rebuild the **Emulation-HW** configuration of the project by clicking the ![](./images/idct_lab/BuildButton.PNG) button.
+	- The build process for hardware emulation takes a couple of minutes to run.
+
+1. Open the new **HLS Report** (in the **Reports** view, open the**Emulation-HW** folder and expand the **binary_container_1** folder).
+
+1. Compare the new latency numbers reported in the **Performance Estimates** section with the previous numbers and you will note considerable improvement based on the DATAFLOW optimization.  
+    - Latency (min/max):
+    - Interval (min/max):
+
+1. Run the **Emulation-HW** flow by clicking the run button, ![](./images/idct_lab/RunButton.PNG). 
+
+1. After the run finishes with the `RUN COMPLETE` message, open the new **Profile Summary** for the **Emulation-HW** run and select the **Kernels & Compute Units** tab.  
+
+1. Compare the **Kernel Total Time (ms)** with the results from the unoptimized run.
+
+
 ### Host Code Optimization
 
-1. Locate the **runFPGA** function in the **idct.cpp** source file using the **Outline** view. 
+1. Open **idct.cpp** file (from the **Project Explorer** window).  
 
-    This function writes, runs, and reads back from the kernel, for each idct kernel invocation until all blocks are processed. In the end it waits for the complete command queue to finish.
+1. Using the **Outline** viewer, navigate to the **runFPGA** function.
 
-    The majority of the **write(...)** function code performs buffer management. It creates new OpenCL buffers for the different sections of the inputs and output. All the way at the end of the write function, there is a call to **clEnqueueMigrateMemObjects** which is used to transfer the data to the kernel. Completion of the write is indicated by an **inEvVec** event. 
+	For each block of 8x8 values, the **runFPGA** function writes data to the FPGA, runs the kernel, and reads results back. 
 	
-	The **run(...)** function sets up the kernel arguments (**clSetKernelArg**) and then enqueues the task (**clEnqueueTask**). The run function is allowed to start once the input vectors are fully transferred (**inEvVec**) and reports completion through the **runEvVec**.
-	
-	Finally there is the **read(...)** function which simply retrieves the data from the output buffer, synchronized through **runEvVec** and **outEvVec**.
+	Communication with the FPGA is handled by OpenCL API calls made within the cu.write, cu.run and cu.read functions.
+	- **clEnqueueMigrateMemObjects** schedules the transfer of data to or from the FPGA.
+	- **clEnqueueTask** schedules the executing of the kernel.
+
+	These OpenCL functions use events to signal their completion and synchronize execution.
 	
 1. Open the **Application Timeline** of the **Emulation-HW** run.  
 
-    Even from the zoomed out view, we can identify gaps between the different kernel runs. Zooming in (**Left mouse drag**) across the gaps, will result in a view similar to the one below:  
-    ![](./idctFigures/ZoomApplicationTimeline.PNG)
+	The green segments at the bottom indicate when the IDCT kernel is running.
 
-    The bottom bars show when the IDCT compute unit is RUNNING. The bar on the left corresponds to one execute of the compute unit and the bar on the right corresponds to the next execution. We can clearly see that there is a gap between two invocations of the compute unit. The Data Transfer section of the timeline shows that this gap is filled by Read and Write operations. The Read operation is to retrieve the results from the execution which just finished and the Write operation is to send inputs for the next execution. This represents a sequential execution flow of each iteration.  
+1. Notice that there are gaps between each of the green segments.
+
+1. Zoom in by performing a **Left mouse drag** across one of these gaps to get a more detailed view.  
+
+    ![](./images/idct_lab/ZoomApplicationTimeline.PNG)
+
+    - The two green segments correspond to two consecutive invocations of the IDCT kernel. 
+    - The gap between the two segments is indicative of idle time between these two invocations. 
+    - The **Data Transfer** section of the timeline shows that **Read** and **Write** operations are happening when the kernel is idle. 
+    - The **Read** operation is to retrieve the results from the execution which just finished and the **Write** operation is to send inputs for the next execution. 
+    - This represents a sequential execution flow of each iteration.  
+    
+1. Close the **Application Timeline**.    
 	
-    If we take another look at the host code, we can actually see in addition to the **clFinish()** function call another synchronization point through a call to **clWaitForEvents(...)** in the **write(...)** function. It gates the release of memory and event resources based on completion of the task (**outEvVec**). If we look for the definition of **outEvVec**, we can see that the number of elements in this vector is defined through the **NUM_SCHED** define. 
+1. In the **idct.cpp** file, go to the **oclDct::write** function.
+
+	- Observe that on line 353, the function synchronizes on the **outEvVec** event through a call to **clWaitForEvents**. 
+	- This event is generated by the completion of the **clEnqueueMigrateMemObjects** call in the **oclDct::read** function (line 429).
+	- Effectively the next execution of the **oclDct::write** function is gated by the completion of the previous **oclDct::read** function, resulting in the sequential behavior observed in the **Application Timeline**. 
 	
-1. Locate the definition of **NUM_SCHED** through the **Outline** viewer in the **idct.cpp** host code.
 	
-	The **1** explains the currently observed behavior, as new tasks (write, run, read) are only enqueued when the previous has completed effectively synchronizing each loop iteration. If we deploy software pipelining and enable for example **6** blocks to be enqueued for processing, we will effectively allow the kernels to execute the kernels continuously.
+1. Use the **Outline** viewer to locate the definition of the **NUM_SCHED** macro in the **idct.cpp** file.
 	
-1. Let us change the **NUM_SCHED** to **#define NUM_SCHED 6**, save the file Ctrl-S, and rerun HW-Emulation, ![](./idctFigures/RunButton.PNG). 
-
-    This rebuilds only the host code and reruns the executable. Once competed, reopen the **Application Timeline** and you will be able to observe that the data transfer is performed concurrently with the read and write operations.  
-    ![](./idctFigures/ZoomApplicationTimelineEnd.PNG)
+	- This macro defines the depth of the event queue.
+	- The value of **1** explains the observed behavior: new tasks (write, run, read) are only enqueued when the previous has completed effectively synchronizing each loop iteration. 
+	- By increasing the value of the **NUM_SCHED** macro, we increase the depth of the event queue and enable more blocks to be enqueued for processing. This will result in the write, run and read tasks to overlap and allow the kernel to execute continuously. 
+	- This technique is called **software pipelining**. 
 	
-	Note, hardware emulation has a larger potential that other system tasks might interrupt and slow down communication. Thus the effect of software pipelining is considerably higher when running on the actual hardware. 
+1. Modify line 213 to increase the value of **NUM_SCHED** to 6 as follows:
+	```C
+	#define NUM_SCHED 6
+	```
+1. Save the file (**Ctrl-S**) and rerun hardware emulation by clicking the run button ![](./images/idct_lab/RunButton.PNG). 
 
-<a name="Executing-on-F1"></a>
-## Executing on F1 
+    - Since only the **idct.cpp** file was change, the incremental makefile rebuilds only the host code before running emulation.
+    - This results in a much faster iteration loop since it is usually the compilation of the kernel to hardware which takes the most time.
+    
+1. Once completed, reopen the **Application Timeline** and observe how **software pipelining** enables overlapping of data transfers and kernel exectution.
 
-Now we are ready to run a fully optimized version of the design. However, the process to create the actual FPGA image (xclbin) takes too much time for this tutorial. From a SDAccel tool perspective, the xclbin creation would simply require to switch the active build configuration to System and rebuild.
+    ![](./images/idct_lab/ZoomApplicationTimelineEnd.PNG)
+	
+	Note: system tasks might slow down communication between the application and the hardware simulation, impacting on the measured performance results. The effect of software pipelining is considerably higher when running on the actual hardware. 
 
-1.  Once the xclbin is available, we can **close** SDAccel. 
+### Building the FPGA binary to execute on F1 
 
-1.  On the Amazon F1 instance it is necessary to register the kernel with the secure storage system. This is performed with the help of the **create_sdaccel_afi.sh** script. Running this script kicks off the registration process and it's completion, after approximately one hour, can be verified using the following command from the terminal.
+Once the application and kernel code have been optimized, the next step is to create an FPGA binary for execution on the F1 instance. 
 
-    ``` shell
-    aws ec2 describe-fpga-images --fpga-image-ids afi-0d59c0f2d5fe9df1f
-    ```
+Creating the FPGA binary is a two-step process:
+* First SDAccel is used to build the Xilinx FPGA binary (.xclbin file).
+* Then the AWS **create_sdaccel_afi.sh** script is used to create the AWS FPGA binary (.awsxclbin file) and regiser a secured and encrypted Amazon FPGA Image (AFI).
 
-    You can try it with the preregistered AFI ID for this tutorial: **afi-0d59c0f2d5fe9df1f**. The output of this command should contain:
+The **create_sdaccel_afi.sh** script does the following:
+* Starts a background process to create the AFI
+* Generates a \<timestamp\>_afi_id.txt which contains the FPGA Image Identifier (or AFI ID) and Global FPGA Image Identifier (or AGFI ID) of the generated AFI
+* Creates the *.awsxclbin AWS FPGA binary file which is read by the host application to determine which AFI should be loaded in the FPGA.
 
-    ``` shell
+These steps would take too long to complete during this tutorial, therefore a precompiled FPGA binary is used to continue this lab and execute on F1.
+
+### Executing on F1 
+
+1. Close the SDAccel GUI and report to the terminal from which you started the tool.
+
+1. Confirm that FPGA binary (.awsxclbin file) is indeed present.
+
+	```bash
+	# Go the lab folder
+	cd /home/centos/SC17_Developer_Lab/idct
+	
+	# List contents of the ./xclbin directory to look for the .awsxclbin FPGA binary
+	ls -la ./xclbin
+	```
+
+1. Retrieve the AFI Id from the \<timestamp\>_afi_id.txt file.
+	
+	```bash
+	more ./xclbin/17_10_25-143305_afi_id.txt
+	```	
+
+1. Confirm that the AFI is ready and available using the retrieved AFI Id.
+
+	``` bash
+	aws ec2 describe-fpga-images --fpga-image-ids afi-0d59c0f2d5fe9df1f
+	```
+   
+   The output of this command should contain:
+
+    ``` json
     ...
     "State": {
         "Code": "available"
@@ -317,39 +392,37 @@ Now we are ready to run a fully optimized version of the design. However, the pr
     ...
     ```
 
-    A good starting point regarding the specifics of the Amazon SDAccel flow is the ![Quick Start Guide to Accelerating your C/C++ application on AWS F1 FPGA Instance with SDAccel](https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md)
-
-1. During runtime, the FPGA image is accessed through a secure xclbin handle "binary_container_1.awsxclbin". This handle is provided to you in your idct directory (~/SC17_Developer_Lab/idct/xclbin/binary_container_1.awsxclbin). Since there is no difference in the host executable, we can run the hardware emulation idct executable with the secure handle, executing the algorithm on the FPGA.
+1. Copy the host application executable built in the SDAccel workspace to the local directory and execute the accelerated application on F1 using the FPGA binary.
 
     ``` shell
-    sudo sh
-    source /opt/Xilinx/SDx/2017.1.rte/setup.sh
+    # Copy the host application executable
     cp /home/centos/SC17_Developer_Lab/workspace/IDCT/Emulation-HW/IDCT.exe .
-    ./IDCT.exe /home/centos/SC17_Developer_Lab/idct/xclbin/binary_container_1.awsxclbin
+   
+    sudo sh
+    # Source the SDAccel runtime environment
+    source /opt/Xilinx/SDx/2017.1.rte/setup.sh
+    # Execute the host application with the .awsxclbin FPGA binary
+    ./IDCT.exe ./xclbin/binary_container_1.awsxclbin
     ```
 
-    Please note, the performance differences between the CPU run and the FPGA accelerated implementation.
+    Note the performance difference between the IDCT running on the CPU and the IDCT running in the FPGA.
 
-<a name="Conclusion"></a>
-## Conclusion  
 
-In this Lab, you learned:
-* The basic setup of a project.
-* How to run Software and Hardware Emulation for a specific project.
-* How to read the various reports generated by the different emulation runs with emphasis on key elements used in identifying areas for optimization improvements.
-* How to use some basic pragmas in the kernel code to increase performance.
-* How to analyze communication between host code and an implementation kernel.
+### Summary  
+
+In this lab, you learned:
+* Key features of the SDAccel development environment
+* Important OpenCL API calls to communicate between the host and the FPGA
+* The differences between the software and hardware emulation flows and how to run them
+* How to read the various reports generated by SDAccel
+* How to use pragmas to increase kernel performance
+* How to use software pipelining to increase system performance
  
-<a name="References"></a>
-## References  
+---------------------------------------
 
-[UG902 Vivado Design Suite User Guide: High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_2/ug902-vivado-high-level-synthesis.pdf)  
-[UG1023 SDAccel Environment User Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_2/ug1023-sdaccel-user-guide.pdf)  
-[UG1207 SDAccel Environment Optimization Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_2/ug1207-sdaccel-optimization-guide.pdf)  
-[UG1253 – SDx Pragma Reference Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_2/ug1253-sdx-pragma-reference.pdf)
-  
-  
-  
-[More references on SDAccel can be found in the Cloud](https://www.xilinx.com/products/design-tools/acceleration-zone.html#knowledgeCenter)
+<p align="center"><b>
+Start the next module: <a href="WRAP_UP.md">4. Wrap-up and Next Steps</a>
+</b></p>  
+
 
 
