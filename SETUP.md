@@ -85,7 +85,7 @@ source sdaccel_setup.sh
 source $XILINX_SDX/settings64.sh 
 ```
 
-  *Note: the setup might create some warning messages regarding missing libraries but these can be safely ignored.*
+  *Note: the setup might create some warning messages but these can be safely ignored.*
 
 
 #### Run the hello_world example to confirm the setup of your F1 instance
