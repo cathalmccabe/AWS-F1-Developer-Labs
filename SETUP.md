@@ -85,6 +85,9 @@ source sdaccel_setup.sh
 source $XILINX_SDX/settings64.sh 
 ```
 
+  *Note: the setup might create some warning messages regarding missing libraries but these can be safely ignored.*
+
+
 #### Run the hello_world example to confirm the setup of your F1 instance
 
 The hello world example is an OpenCL application with a simple vector-addition accelerator. This example uses a precompiled FPGA binary to reduce compilation time and streamline the lab.
