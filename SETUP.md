@@ -66,6 +66,7 @@ You should now be connected to the instance.
 
 * Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
   - Note: if a "keyring" popup comes up, click **Cancel**. 
+* Continue following the lab instructions from within the remote instance
   - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
 
