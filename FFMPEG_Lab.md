@@ -34,14 +34,18 @@ The HEVC encoder is provided courtesy of **NGCodec** [(www.ngcodec.com)](www.ngc
     cd ~/SC17_Developer_Lab/ffmpeg
     ```
 
-1. Source the FFmpeg and SDAccel runtime environments.
+1. Source the SDAccel runtime environment.
     ```bash
     sudo sh
-    source ./ffsetup.sh
     source /opt/Xilinx/SDx/2017.1.rte/setup.sh
     ```
 
 #### Step 1: Running with the encoder on the CPU 
+
+1. Load the FFmpeg settings. 
+    ```bash
+    source ./ffsetup.sh
+    ```
 
 1. Encode using the libx265 software codec running on the CPU.
     ```bash
