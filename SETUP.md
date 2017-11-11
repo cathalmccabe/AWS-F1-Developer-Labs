@@ -34,9 +34,9 @@ If you have not received that email, please contact an Xilinx event staff member
 
 1. Click **Next**.
 
-1. Enter the following credentials:
-    - IAM user name: *IAM user name provided in the email*
-    - Password: ******** _(provided at the event)_
+1. Enter the **IAM user name** which was emailed to you.
+
+1. Enter the **Password** provided at the event.
 
 1. Click **Sign In**.
     - You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
