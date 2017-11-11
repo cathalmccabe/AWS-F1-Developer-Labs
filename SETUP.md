@@ -70,7 +70,8 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
 
 1. Click **Connect**. This should bring up a message about connection certificates. 
 
-1. Click **Yes** to dismiss the "certificate" window. The Remote Desktop Connection window opens with a login prompt.
+1. Click **Yes** to dismiss the message. 
+    - The Remote Desktop Connection window opens with a login prompt.
 
 1. Login with the following credentials:
     - User: **centos**
@@ -88,7 +89,8 @@ You should now be connected to the remote F1 instance running Centos 7.
 
     - It opens the browser and loads the lab instructions.
 
-    *Note: if a "keyring" popup comes up, click **Cancel**. *
+    _Note: if a "keyring" popup comes up, click Cancel._
+
 1. Continue following the lab instructions from within the remote instance and the Chromium browser.
     - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
