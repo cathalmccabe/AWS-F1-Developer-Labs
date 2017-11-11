@@ -21,7 +21,7 @@ For this event, each registered participant has been attributed a preconfigured 
 - IAM username
 - Link to access a preconfigured EC2 F1 instance
 
-If you have not received that email, please contact an Xilinx event staff member.
+If you have not received that email, please contact an Xilinx event staff member now.
 
 #### Start a preconfigured EC2 F1 instance
 
@@ -35,21 +35,21 @@ If you have not received that email, please contact an Xilinx event staff member
 1. Click **Next**.
 
 1. Enter the following credentials:
-    - IAM user name: *IAM user name provided in the email**
+    - IAM user name: *IAM user name provided in the email*
     - Password: ******** _(provided at the event)_
 
 1. Click **Sign In**.
-
-    You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
+    - You should now be logged in the AWS EC2 Console and you should see an **f1.2xlarge** instance in the **stopped** state.
 
 1. Start the instance by choosing the **Actions** button, then select **Instance State** and then **Start**.
 
     ![Start](./images/setup_lab/start1.png?raw=true)
 
-    Allow about 10 seconds for the instance to start. If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
+    - Allow about 10 seconds for the instance to start. 
+    - If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
 
 1. Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
-    - You will be using this IP address to connect to the instance.
+    - You will be using this IP address to connect to your instance.
     - The **IPv4 Public IP** address is found in the bottom pane of the EC2 Console, in the right column of the **Description** tab.
 
 #### Connect to your instance using a remote desktop client
@@ -59,14 +59,14 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
 1. From your local machine, start a remote desktop protocol client
     - On Windows: press the Windows key and type "remote desktop".
       - You should see the "Remote Desktop Connection" in the list of programs.
-      - Alternatively you simply also type mstsc.exe from the Window run prompt.
+      - Alternatively you can also simply type mstsc.exe in the Windows run prompt.
     - On Linux: RDP clients such a Remmina or Vinagre are suitable.
     - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
 
 1. In the RDP client, enter the **IPv4 Public IP** of your instance.
 
 1. **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth**
-    - On Windows: Click Options, then select the Display tab and set Colors to True Colors (24 bit)
+    - On Windows: In the bottom-left corner of connection prompt, click Options, then select the Display tab and set Colors to True Colors (24 bit)
 
 1. Click **Connect**. This should bring up a message about connection certificates. 
 
@@ -80,14 +80,15 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
    
 1. Click **Ok**.
 
-You should now be connected to the instance.
+You should now be connected to the remote F1 instance running Centos 7.
 
 #### Open the lab instructions on the remote F1 instance
 
-1. Double click on the **Chromium** icon, it opens the browser and loads the lab instructions.
+1. In the remote instance, double click on the **Chromium** icon.
+    - It opens the browser and loads the lab instructions.
     - Note: if a "keyring" popup comes up, click **Cancel**. 
 
-1. Continue following the lab instructions from within the remote instance
+1. Continue following the lab instructions from within the remote instance and the Chromium browser.
     - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
 
