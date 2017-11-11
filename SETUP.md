@@ -59,7 +59,7 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
 1. From your local machine, start a remote desktop protocol client
     - On Windows: press the Windows key and type "remote desktop".
       - You should see the "Remote Desktop Connection" in the list of programs.
-      - Alternatively you can also simply type mstsc.exe in the Windows run prompt.
+      - Alternatively you can also simply type `mstsc.exe` in the Windows run prompt.
     - On Linux: RDP clients such a Remmina or Vinagre are suitable.
     - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
 
@@ -85,9 +85,10 @@ You should now be connected to the remote F1 instance running Centos 7.
 #### Open the lab instructions on the remote F1 instance
 
 1. In the remote instance, double click on the **Chromium** icon.
-    - It opens the browser and loads the lab instructions.
-    - Note: if a "keyring" popup comes up, click **Cancel**. 
 
+    - It opens the browser and loads the lab instructions.
+
+    *Note: if a "keyring" popup comes up, click **Cancel**. *
 1. Continue following the lab instructions from within the remote instance and the Chromium browser.
     - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
 
@@ -142,7 +143,7 @@ The hello world example is an OpenCL application with a simple vector-addition a
     ./helloworld
     ```
 
-1. A successful outcome looks as follows:
+    The host application executes using the vector_addition kernel running in the FPGA and produces the following results:
 
     ```shell
     Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
