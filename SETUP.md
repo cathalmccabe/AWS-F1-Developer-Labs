@@ -70,8 +70,7 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
 
 1. Click **Connect**. This should bring up a message about connection certificates. 
 
-1. Click **Yes** to dismiss the message. 
-    - The Remote Desktop Connection window opens with a login prompt.
+1. Click **Yes** to dismiss the message. The Remote Desktop Connection window opens with a login prompt.
 
 1. Login with the following credentials:
     - User: **centos**
@@ -86,14 +85,11 @@ You should now be connected to the remote F1 instance running Centos 7.
 #### Open the lab instructions on the remote F1 instance
 
 1. In the remote instance, double click on the **Chromium** icon.
-
     - It opens the browser and loads the lab instructions.
-
     _Note: if a "keyring" popup comes up, click Cancel._
 
 1. Continue following the lab instructions from within the remote instance and the Chromium browser.
     - We suggest you perform all your copy-paste from the instructions to the shell within the RDP session to avoid issues.
-
 
 #### Configure the Xilinx SDAccel environment and load the workshop files
 
@@ -145,7 +141,7 @@ The hello world example is an OpenCL application with a simple vector-addition a
     ./helloworld
     ```
 
-    The host application executes using the vector_addition kernel running in the FPGA and produces the following results:
+1. The host application executes using the vector_addition kernel running in the FPGA and produces the following results:
 
     ```shell
     Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
@@ -178,7 +174,7 @@ The hello world example is an OpenCL application with a simple vector-addition a
     sh-4.2#
     ```
 
-    You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
+1. You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
 
 1. Close your terminal.
 
