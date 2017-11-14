@@ -50,7 +50,7 @@ If you have not received that email, please contact an Xilinx event staff member
 
 1. Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
     - You will be using this IP address to connect to your instance.
-    - The **IPv4 Public IP** address is found in the bottom pane of the EC2 Console, in the right column of the **Description** tab.
+    - The **IPv4 Public IP** address is displayed in EC2 Console next to the instance status.
 
 #### Connect to your instance using a remote desktop client
 
