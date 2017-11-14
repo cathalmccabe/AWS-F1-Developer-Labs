@@ -38,7 +38,7 @@ Please also note that although the entire tutorial is performed on an F1 instanc
 	*Note: the sdaccel_setup.sh script might generate warning messages, but these can be safely ignored.*
 
 
-1. Launch the SDAccel and open the predefined workspace containing the IDCT project: 
+1. Launch the SDAccel GUI and open the predefined workspace containing the IDCT project: 
     ```bash
     sdx -workspace /home/centos/SC17_Developer_Lab/workspace
     ```
@@ -89,12 +89,12 @@ Please also note that although the entire tutorial is performed on an F1 instanc
 	* The **krnl_idct** function is the top-level for the custom hardware accelerator. Interface properties for the accelerator are specified in this function.
 	* The **krnl_idct_dataflow** function is called by the top-level function and encapsulates the main functions of the accelerator.
 	* The **read_blocks** function reads from global memory values sent by the host application and streams them to the **execute** function.
-	* The **execute** function receives the streaming data and, for each 8x8 block received, calls the **idct** function to perform the actual computation. Streams the results back out.
+	* The **execute** function receives the streaming data and, for each 8x8 block received, calls the **idct** function to perform the actual computation and streams the results back out.
 	* The **write_blocks** function receives the streaming results from the **execute** function and writes them back to global memory for the host application.
 	
 1. Open the **idct.cpp** file (from the **src** folder of the **Project Explorer** view).  
 
-1. Again, use the **Outline** viewer quickly look-up and inspect the main functions of the host application:
+1. Again, use the **Outline** viewer to quickly look-up and inspect the main functions of the host application:
 	* The **main** function of the C++ program initializes the test vectors, sets-up OpenCL, runs the reference model, runs the hardware accelerator, releases the OpenCL resources, and compares the results of the reference IDCT model with the accelerator implementation.
 	* The **runFPGA** function takes in a vector of inputs and, for each 8x8 block, calls the hardware accelerated IDCT using the **write**, **run**, **read**, and **finish** helper functions. These function use OpenCL API calls to communicate with the FPGA and are covered in greater detail later in this tutorial.
 	* The **runCPU** function takes in a vector of inputs and, for each 8x8 block, calls **idctSoft**, a reference implementation of the IDCT .
