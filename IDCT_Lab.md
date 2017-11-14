@@ -2,7 +2,7 @@
   <tr>
     <th width="100%" colspan="5"><h2>SC17 Xilinx Developer Lab</h2></th>
   </tr>
-  <tr>
+  <tr>f
     <td width="20%" align="center"><a href="README.md">Introduction</a></td>
     <td width="20%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
     <td width="20%" align="center"><a href="FFMPEG_Lab.md">2. Experiencing F1 acceleration</a></td>
@@ -129,6 +129,8 @@ SDAccel provides two emulation flows which allow testing the application before 
 
 SDAccel uses Makefiles to perform incremental compilation of the project. This means that unless file changes require the recompilation of the host code or of the kernel code, no compilation is performed.
 
+1. Return to the **SDx Project Settings** by clicking on **project.sdx** in the **Project Explorer** window (left side of the GUI).
+
 1. In the upper right corner of the **SDx Project Settings** window, the **Active build configuration** is shown. Ensure that **Emulation-CPU** is selected.
 
 1. Click the **Run** button ![](./images/idct_lab/RunButton.PNG) to run software emulation.
@@ -142,8 +144,6 @@ SDAccel uses Makefiles to perform incremental compilation of the project. This m
 	TEST PASSED
 	RUN COMPLETE
 	```	
-	
-1. Return to the **SDx Project Settings** by clicking on **project.sdx** in the **Project Explorer** window (left side of the GUI).
 	
 1. In the **SDx Project Settings**, change the **Active build configuration** to **Emulation-HW**.
 
