@@ -54,8 +54,8 @@ The HEVC encoder is provided courtesy of **NGCodec** [(www.ngcodec.com)](www.ngc
 
     The encoder will finish with a message similar to this one: \
     *frame=500 **fps=9.0** q=-0.0 **Lsize=19933kB** time=00:00:19.92 bitrate=8197.4kbits/s **speed=0.358x*** 
-    > **fps** measures the performance of the encoder measured in processed frames per second. \
-    **size** measures the size the compressed output file. \
+    > **fps** measures the performance of the encoder in processed frames per second. \
+    **size** measures the size of the compressed output file. \
     **speed** measures the ratio of video time to encoding time.
  
 #### Step 2: Running with the encoder on the F1 FPGA 
@@ -97,7 +97,7 @@ AWS F1 instances with Xilinx FPGAs can provide significant performance improveme
 
 Multiple instances of the NGCodec encoder could be loaded in the FPGA, allowing parallel processing of multiple video streams and easily delivering more than a 10x increase in performance/$ over a CPU-based solution. 
 
-It is possible to use F1 to accelerate popular frameworks such as ```ffmpeg```. This is a very powerful proposition at it allows end-users to keep working with their preferred tools and APIs while transparently benefiting from acceleration.
+It is possible to use F1 to accelerate popular frameworks such as ```ffmpeg```. This is a very powerful proposition as it allows end-users to keep working with their preferred tools and APIs while transparently benefiting from acceleration.
 
 In addition to video transcoding, F1 instances are very well suited to accelerate compute intensive workloads such as: genomics, financial analytics, big data analytics, security or machine learning.
 
