@@ -254,7 +254,7 @@ Looking at the **HLS Report**, we identified that the read, execute and write fu
 
 1. Observe that the three functions are communicating using `hls::streams` objects. These objects model a FIFO-based communication scheme. This is the recommended coding style which should be used whenever possible to exhibit streaming behavior and allow DATAFLOW optimization.
 
-1. Enable the DATAFLOW optimization by uncommenting the **#pragma DATAFLOW** present in the **krnl_idct_dataflow** function (line 322). 
+1. Enable the DATAFLOW optimization by uncommenting the **#pragma HLS DATAFLOW** present in the **krnl_idct_dataflow** function (line 322). 
 	
     - The DATAFLOW optimization allows each of the subsequent functions to execute as independent processes. 
     - This results in overlapping and pipelined execution of the read, execute and write functions instead of sequential execution.
