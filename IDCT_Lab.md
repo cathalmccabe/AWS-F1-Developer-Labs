@@ -267,7 +267,7 @@ Looking at the **HLS Report**, we identified that the read, execute and write fu
 1. Rebuild the **Emulation-HW** configuration of the project by clicking the ![](./images/idct_lab/BuildButton.PNG) button.
 	- The build process for hardware emulation takes a couple of minutes to run.
 
-1. Open the new **HLS Report** (in the **Reports** view, open the**Emulation-HW** folder and expand the **binary_container_1** folder).
+1. Open the new **HLS Report** (in the **Reports** view, open the **Emulation-HW** folder and expand the **binary_container_1** folder).
 
 1. Compare the new latency numbers reported in the **Performance Estimates** section with the previous numbers and you will note considerable improvement based on the DATAFLOW optimization.  
     - Latency (min/max):
