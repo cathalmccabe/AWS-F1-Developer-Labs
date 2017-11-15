@@ -2,7 +2,7 @@
   <tr>
     <th width="100%" colspan="5"><h2>SC17 Xilinx Developer Lab</h2></th>
   </tr>
-  <tr>f
+  <tr>
     <td width="20%" align="center"><a href="README.md">Introduction</a></td>
     <td width="20%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
     <td width="20%" align="center"><a href="FFMPEG_Lab.md">2. Experiencing F1 acceleration</a></td>
