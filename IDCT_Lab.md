@@ -119,11 +119,11 @@ Please also note that although the entire tutorial is performed on an F1 instanc
 
 	Note: all objects accessed through a **clCreate...** function call are to be released before terminating the program by calling **clRelease...**. This avoids memory leakage and clears the locks on the device.
 
-	All of the above API functions are documented by the [Khronos Group](https://www.khronos.org), the mainteners of OpenCL, the open standard for parallel programming of heterogeneous systems
+	All of the above API functions are documented by the [Khronos Group](https://www.khronos.org), the maintainers of OpenCL, the open standard for parallel programming of heterogeneous systems
 
 ### Running the Emulation Flows
 
-SDAccel provides two emulation flows which allow testing the application before deploying it on the F1 instance. The flows are referred to as software emulation (or Emulation-CPU) and hardware emulation (or Emulation-HW), respectively.
+SDAccel provides two emulation flows which allow testing the application before deploying on the F1 instance. The flows are referred to as software emulation (or Emulation-CPU) and hardware emulation (or Emulation-HW), respectively.
 * Software emulation is used to identify syntax issues and verify the behavior of application.
 * Hardware emulation is used to get performance estimates for the accelerated application.
 
