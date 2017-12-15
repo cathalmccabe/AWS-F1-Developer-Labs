@@ -262,7 +262,7 @@ Looking at the **HLS Report**, we identified that the read, execute and write fu
     - This results in overlapping and pipelined execution of the read, execute and write functions instead of sequential execution.
     - The FIFO channels between the different processes do not need to buffer the complete dataset anymore but can directly stream the data to the next block. 
 
-1. Comment out the three **#pragma HLS stream** statements on lines 327, 328 and 329.
+1. Comment the three **#pragma HLS stream** statements on lines 327, 328 and 329.
 
 1. Save the file (**Ctrl-S**).
 
