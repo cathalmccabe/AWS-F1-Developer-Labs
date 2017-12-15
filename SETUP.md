@@ -45,7 +45,7 @@ If you have not received that email, please contact an Xilinx event staff member
 
     ![Start](./images/setup_lab/start1.png?raw=true)
 
-    - Allow about 10 seconds for the instance to start. 
+    - Allow about 10 seconds for the instance to start and be in the **Running** state. 
     - If needed, click the **Refresh** icon (![Refresh](./images/setup_lab/refresh2.png?raw=true)) in the top-right corner of the EC2 Console to update the instance status information.
 
 1. Once the instance is running, find and note the **IPv4 Public IP** address of your instance.
@@ -63,10 +63,10 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
     - On Linux: RDP clients such a Remmina or Vinagre are suitable.
     - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
 
-1. In the RDP client, enter the **IPv4 Public IP** of your instance.
-
-1. **IMPORTANT**: Before connecting, set your remote desktop client to use **24-bit for color depth**
+1. **_IMPORTANT_**: Before connecting, set your remote desktop client to use **24-bit for color depth**
     - On Windows: In the bottom-left corner of connection prompt, click Options, then select the Display tab and set Colors to True Colors (24 bit)
+    
+1. In the RDP client, enter the **IPv4 Public IP** of your instance.
 
 1. Click **Connect**. This should bring up a message about connection certificates. 
 
@@ -142,7 +142,7 @@ The hello world example is an OpenCL application with a simple vector-addition a
     ./helloworld
     ```
 
-1. The host application executes using the vector_addition kernel running in the FPGA and produces the following results:
+    The host application executes using the vector_addition kernel running in the FPGA and produces the following results:
 
     ```shell
     Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
@@ -175,7 +175,7 @@ The hello world example is an OpenCL application with a simple vector-addition a
     sh-4.2#
     ```
 
-1. You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
+    You compiled a host application and successfully executed it on F1 using a pre-compiled Amazon FPGA Image (AFI).
 
 1. Close your terminal.
 
