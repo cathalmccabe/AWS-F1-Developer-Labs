@@ -39,7 +39,7 @@ AWS F1 instances are ideal to accelerate complex workloads. In this module you w
 1. **Developing and optimizing F1 applications with SDAccel** \
 You will use the SDAccel development environment to create, profile and optimize an F1 accelerator. The lab focuses on the Inverse Discrete Cosine Transform (IDCT), a compute intensive function used at the heart of all video codecs.
 1. **Wrap-up and next steps** \
-You will to close your RDP session, stop your F1 instance and explore next steps to continue your F1 experience after the Xilinx Developer Lab.
+You will to close your remote desktop session, stop your F1 instance and explore next steps to continue your F1 experience after the Xilinx Developer Lab.
 
 Since building FPGA binaries is not instantaneous, all the modules of this Developer Lab will use precompiled FPGA binaries.
 
