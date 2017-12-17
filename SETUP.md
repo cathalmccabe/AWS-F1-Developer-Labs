@@ -57,7 +57,8 @@ If you have not received that email, please contact an Xilinx event staff member
 The instance you just started is preconfigured with remote desktop protocol (RDP) services.
 
 1. From your local machine, start a remote desktop protocol client
-    - **_IMPORTANT_**: Before connecting, set your remote desktop client to use **24-bit for color depth** (on Windows: In the bottom-left corner of connection prompt, click Options, then select the Display tab and set Colors to True Colors (24 bit))
+    - **_IMPORTANT_**: Before connecting, set your remote desktop client to use **24-bit for color depth**
+      - (on Windows: In the bottom-left corner of connection prompt, click Options, then select the Display tab and set Colors to True Colors (24 bit))
     - On Windows: press the Windows key and type "remote desktop".
       - You should see the "Remote Desktop Connection" in the list of programs.
       - Alternatively you can also simply type `mstsc.exe` in the Windows run prompt.
