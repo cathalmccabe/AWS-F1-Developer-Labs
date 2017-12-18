@@ -29,7 +29,7 @@ It is now time to wrap-up this lab. Please follow these steps to close your RDP 
 Note: permission to **Terminate** instances was disabled for all user accounts of this Developer Lab to prevent accidental terminations.
 
 ### Congratulations!
-You have successfully completed all the modules of SC17 Xilinx Developer Lab. 
+You have successfully completed all the modules of the AWS F1 Xilinx Developer Lab. 
 1. You started a pre-configured EC2 F1 instance and connected to it using a remote desktop client. 
 1. You experienced the acceleration potential of F1 by using ffmpeg and an F1-optimized HEVC encoder. 
 1. You used SDAccel to create, profile and optimize an F1 accelerator. 
