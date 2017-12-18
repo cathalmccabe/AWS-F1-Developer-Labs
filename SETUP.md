@@ -1,6 +1,6 @@
 <table style="width:100%">
   <tr>
-    <th width="100%" colspan="5"><h2>SC17 Xilinx Developer Lab</h2></th>
+    <th width="100%" colspan="5"><h2>AWS F1 Xilinx Developer Lab</h2></th>
   </tr>
   <tr>
     <td width="20%" align="center"><a href="README.md">Introduction</a></td>
