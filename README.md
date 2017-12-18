@@ -1,6 +1,6 @@
 <table style="width:100%">
   <tr>
-    <th width="100%" colspan="5"><h2>SC17 Xilinx Developer Lab</h2></th>
+    <th width="100%" colspan="5"><h2>AWS F1 Xilinx Developer Lab</h2></th>
   </tr>
   <tr>
     <td width="20%" align="center"><b>Introduction</b></td>
@@ -14,7 +14,7 @@
 ---------------------------------------
 ### Introduction
 
-Welcome to the SC17 Xilinx Developer Lab. During this session you will gain hands-on experience with AWS F1 and learn how to develop accelerated applications using the AWS F1 OpenCL flow and the Xilinx SDAccel development environment.
+Welcome to the AWS F1 Xilinx Developer Lab. During this session you will gain hands-on experience with AWS F1 and learn how to develop accelerated applications using the AWS F1 OpenCL flow and the Xilinx SDAccel development environment.
 
 #### Overview of the AWS F1 platform and SDAccel flow
 
