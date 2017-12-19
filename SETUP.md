@@ -99,7 +99,7 @@ You should now be connected to the remote F1 instance running Centos 7.
 
     ```bash  
     cd /home/centos
-    git clone https://github.com/Xilinx/AWS-F1-Developer-Lab.git
+    git clone https://github.com/Xilinx/AWS-F1-Developer-Labs.git
     ```
 
 1. Source the SDAccel environment. 
