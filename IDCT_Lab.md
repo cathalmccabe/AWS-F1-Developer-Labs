@@ -366,7 +366,7 @@ These steps would take too long to complete during this tutorial, therefore a pr
 
 	```bash
 	# Go the lab folder
-	cd /home/centos/SC17_Developer_Lab/idct
+	cd /home/centos/AWS-F1-Developer-Labs/idct
 	
 	# List contents of the ./xclbin directory to look for the .awsxclbin FPGA binary
 	ls -la ./xclbin
@@ -398,7 +398,7 @@ These steps would take too long to complete during this tutorial, therefore a pr
 
     ``` shell
     # Copy the host application executable
-    cp /home/centos/SC17_Developer_Lab/workspace/IDCT/Emulation-HW/IDCT.exe .
+    cp /home/centos/AWS-F1-Developer-Labs/workspace/IDCT/Emulation-HW/IDCT.exe .
    
     sudo sh
     # Source the SDAccel runtime environment
