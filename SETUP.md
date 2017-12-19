@@ -95,7 +95,7 @@ You should now be connected to the remote F1 instance running Centos 7.
 
 1. Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**.
 
-1. In the terminal, `git clone` the SC17_Developer_Lab repository to download the files for the Xilinx Developer Lab.
+1. In the terminal, `git clone` the AWS-F1-Developer-Labs repository to download the files for the Xilinx Developer Lab.
 
     ```bash  
     cd /home/centos
