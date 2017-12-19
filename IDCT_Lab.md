@@ -40,7 +40,7 @@ Please also note that although the entire tutorial is performed on an F1 instanc
 
 1. Launch the SDAccel GUI and open the predefined workspace containing the IDCT project: 
     ```bash
-    sdx -workspace /home/centos/SC17_Developer_Lab/workspace
+    sdx -workspace /home/centos/AWS-F1-Developer-Labs/workspace
     ```
 	*Note: a warning message may appear if loading Eclipse takes longer than expected. Click **Wait** to dismiss it.*
 
