@@ -31,7 +31,7 @@ The HEVC encoder is provided courtesy of **NGCodec** [(www.ngcodec.com)](www.ngc
 1. Open a new terminal by right-clicking anywhere in the Desktop area and selecting **Open Terminal**. 
 1. Navigate to the FFmpeg lab directory.
     ```bash
-    cd ~/SC17_Developer_Lab/ffmpeg
+    cd ~/AWS-F1-Developer-Labs/ffmpeg
     ```
 
 1. Source the SDAccel runtime environment.
