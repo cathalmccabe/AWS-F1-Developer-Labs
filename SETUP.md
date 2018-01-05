@@ -63,7 +63,7 @@ The instance you just started is preconfigured with remote desktop protocol (RDP
       - You should see the "Remote Desktop Connection" in the list of programs.
       - Alternatively you can also simply type `mstsc.exe` in the Windows run prompt.
     - On Linux: RDP clients such a Remmina or Vinagre are suitable.
-    - On macOS: use the Microsoft Remote Desktop from the Mac App Store.
+    - On macOS: use the Microsoft Remote Desktop v8.0.43 (that version offers color depth settings) from the Mac App Store.
     
 1. In the RDP client, enter the **IPv4 Public IP** of your instance.
 
