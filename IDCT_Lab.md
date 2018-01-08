@@ -371,29 +371,6 @@ These steps would take too long to complete during this tutorial, therefore a pr
 	# List contents of the ./xclbin directory to look for the .awsxclbin FPGA binary
 	ls -la ./xclbin
 	```
-
-1. Retrieve the AFI Id from the \<timestamp\>_afi_id.txt file.
-	
-	```bash
-	more ./xclbin/17_10_25-143305_afi_id.txt
-	```	
-
-1. Confirm that the AFI is ready and available using the retrieved AFI Id.
-
-	``` bash
-	aws ec2 describe-fpga-images --fpga-image-ids afi-0d59c0f2d5fe9df1f
-	```
-   
-   The output of this command should contain:
-
-    ``` json
-    ...
-    "State": {
-        "Code": "available"
-    },
-    ...
-    ```
-
 1. Copy the host application executable built in the SDAccel workspace to the local directory and execute the accelerated application on F1 using the FPGA binary.
 
     ``` shell
