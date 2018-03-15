@@ -1,20 +1,20 @@
 <table style="width:100%">
   <tr>
-    <th width="100%" colspan="5"><h2>AWS F1 Xilinx Developer Lab</h2></th>
+    <th width="100%" colspan="5"><h2>SDAccel AWS F1 Developer Labs</h2></th>
   </tr>
   <tr>
     <td width="20%" align="center"><b>Introduction</b></td>
-    <td width="20%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
-    <td width="20%" align="center"><a href="FFMPEG_Lab.md">2. Experiencing F1 acceleration</a></td>
-    <td width="20%" align="center"><a href="IDCT_Lab.md">3. Developing F1 applications</a></td>
-    <td width="20%" align="center"><a href="WRAP_UP.md">4. Wrapping-up</td>
+    <td width="20%" align="center"><a href="1_SETUP.md">1. Connecting to your F1 instance</a></td> 
+    <td width="20%" align="center"><a href="2_HELLOWORLD.md">2. Running Helloworld</a></td>
+    <td width="20%" align="center"><a href="3_IDCT.md">3. Developing F1 applications</a></td>
+    <td width="20%" align="center"><a href="4_WRAP_UP.md">4. Wrapping-up</a></td>
   </tr>
 </table>
 
 ---------------------------------------
 ### Introduction
 
-Welcome to the AWS F1 Xilinx Developer Lab. During this session you will gain hands-on experience with AWS F1 and learn how to develop accelerated applications using the AWS F1 OpenCL flow and the Xilinx SDAccel development environment.
+Welcome to the SC17 Xilinx Developer Lab. During this session you will gain hands-on experience with AWS F1 and learn how to develop accelerated applications using the AWS F1 OpenCL flow and the Xilinx SDAccel development environment.
 
 #### Overview of the AWS F1 platform and SDAccel flow
 
@@ -39,13 +39,13 @@ AWS F1 instances are ideal to accelerate complex workloads. In this module you w
 1. **Developing and optimizing F1 applications with SDAccel** \
 You will use the SDAccel development environment to create, profile and optimize an F1 accelerator. The lab focuses on the Inverse Discrete Cosine Transform (IDCT), a compute intensive function used at the heart of all video codecs.
 1. **Wrap-up and next steps** \
-You will to close your remote desktop session, stop your F1 instance and explore next steps to continue your F1 experience after the Xilinx Developer Lab.
+You will to close your RDP session, stop your F1 instance and explore next steps to continue your F1 experience after the Xilinx Developer Lab.
 
 Since building FPGA binaries is not instantaneous, all the modules of this Developer Lab will use precompiled FPGA binaries.
 
 ---------------------------------------
 
 <p align="center"><b>
-Start the next module: <a href="SETUP.md">1. Connecting to your F1 instance</a>
+Start the next module: <a href="1_SETUP.md">1. Connecting to your F1 instance</a>
 </b></p>
 
