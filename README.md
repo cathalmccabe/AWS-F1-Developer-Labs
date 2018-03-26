@@ -4,10 +4,10 @@
   </tr>
   <tr>
     <td width="20%" align="center"><b>Introduction</b></td>
-    <td width="20%" align="center"><a href="1_SETUP.md">1. Connecting to your F1 instance</a></td> 
-    <td width="20%" align="center"><a href="2_HELLOWORLD.md">2. Running Helloworld</a></td>
-    <td width="20%" align="center"><a href="3_IDCT.md">3. Developing F1 applications</a></td>
-    <td width="20%" align="center"><a href="4_WRAP_UP.md">4. Wrapping-up</a></td>
+    <td width="20%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
+    <td width="20%" align="center"><a href="HELLOWORLD.md">2. Running Helloworld</a></td>
+    <td width="20%" align="center"><a href="IDCT.md">3. Developing F1 applications</a></td>
+    <td width="20%" align="center"><a href="WRAP_UP.md">4. Wrapping-up</a></td>
   </tr>
 </table>
 
@@ -46,6 +46,6 @@ Since building FPGA binaries is not instantaneous, all the modules of this Devel
 ---------------------------------------
 
 <p align="center"><b>
-Start the next module: <a href="1_SETUP.md">1. Connecting to your F1 instance</a>
+Start the next module: <a href="SETUP.md">1. Connecting to your F1 instance</a>
 </b></p>
 
