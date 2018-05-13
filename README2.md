@@ -40,5 +40,5 @@ Since building FPGA binaries is not instantaneous, all the modules of this Devel
 ---------------------------------------
 
 <p align="center"><b>
-Start the next module: <a href="WRAP_UP2.md">1. Connecting to your F1 instance</a>
+Start the next module: <a href="SETUP2.md">1. Connecting to your F1 instance</a>
 </b></p>
