@@ -4,8 +4,8 @@
   </tr>
   <tr>
     <td width="33%" align="center"><b>Introduction</b></td>
-    <td width="34%" align="center"><a href="SETUP.md">1. Connecting to your F1 instance</a></td> 
-    <td width="33%" align="center"><a href="WRAP_UP.md">2. Wrapping-up</td>
+    <td width="34%" align="center"><a href="SETUP2.md">1. Connecting to your F1 instance</a></td> 
+    <td width="33%" align="center"><a href="WRAP_UP2.md">2. Wrapping-up</td>
   </tr>
 </table>
 
@@ -44,5 +44,5 @@ Since building FPGA binaries is not instantaneous, all the modules of this Devel
 ---------------------------------------
 
 <p align="center"><b>
-Start the next module: <a href="WRAP_UP.md">1. Connecting to your F1 instance</a>
+Start the next module: <a href="WRAP_UP2.md">1. Connecting to your F1 instance</a>
 </b></p>
