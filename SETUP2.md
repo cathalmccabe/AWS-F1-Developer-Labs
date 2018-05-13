@@ -5,7 +5,7 @@
   <tr>
     <td width="33%" align="center"><a href="README2.md">Introduction</a></td>
     <td width="34%" align="center"><b>1. Connecting to your F1 instance</b></td> 
-    <td width="33%" align="center"><a href="WRAP_UP2.md">4. Wrapping-up</td>
+    <td width="33%" align="center"><a href="WRAP_UP2.md">2. Wrapping-up</td>
   </tr>
 </table>
 
