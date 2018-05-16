@@ -28,7 +28,7 @@ The architecture of the AWS F1 platform and the SDAccel development flow are pic
 
 #### Overview of the Xilinx Developer Lab modules
 
-This developer lab is divided in 4 modules. It is recommended to complete each module before proceeding to the next.
+This developer lab is divided in 2 modules. It is recommended to complete each module before proceeding to the next.
 
 1. **Connecting to your F1 instance** \
 You will start a pre-configured EC2 F1 instance and connect to it using a remote desktop client. Once connected, you will download the lab files and confirm you can execute a simple application on F1.
