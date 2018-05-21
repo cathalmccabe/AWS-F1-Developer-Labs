@@ -16,15 +16,16 @@
 
 ### Experiencing F1 Acceleration
 
-In this module you will experience the acceleration potential of AWS F1 instances by using ```ffmpeg``` to encode 20 seconds of raw YUV 1920x1080 video, first using the libx265 codec and then a HEVC encoder optimized for F1 FPGAs. 
+In this module you will experience the acceleration potential of AWS F1 instances by using FFmpeg to encode 20 seconds of raw YUV 1920x1080 video, first using the libx265 codec and then a HEVC encoder optimized for F1 FPGAs. 
 
 ![](images/ffmpeg_lab/ffmpeg_lab.png)
 
-```ffmpeg``` is a very popular framework providing very fast video and audio converters. The ```ffmpeg``` code is open-source and allows for the addition of custom plugins. For this lab, a custom plugin has been created to transparently use the NGCodec HEVC encoder running on AWS F1.  
+FFmpeg is a very popular framework providing very fast video and audio converters. The FFmpeg code is open-source and allows for the addition of custom plugins. For this lab, a custom plugin has been created to transparently use the NGCodec HEVC encoder running on AWS F1. This software uses code of [FFmpeg](http://ffmpeg.org) licensed under the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) and its source can be downloaded [here](https://github.com/Xilinx/AWS-F1-Developer-Labs/tree/master/ffmpeg/build). 
 
-Users can switch between the libx265 software codec and the F1-accelerated implementation by simply changing a parameter on the ```ffmpeg``` command line. The plugin uses OpenCL API calls to write video frames to the FPGA, execute the encoder and read back the compressed video.
+Users can switch between the libx265 software codec and the F1-accelerated implementation by simply changing a parameter on the FFmpeg command line. The plugin uses OpenCL API calls to write video frames to the FPGA, execute the encoder and read back the compressed video.
 
 The HEVC encoder is provided courtesy of **NGCodec** [(www.ngcodec.com)](www.ngcodec.com).
+
 
 #### Setting-up the lab
 
@@ -97,7 +98,7 @@ AWS F1 instances with Xilinx FPGAs can provide significant performance improveme
 
 Multiple instances of the NGCodec encoder could be loaded in the FPGA, allowing parallel processing of multiple video streams and easily delivering more than a 10x increase in performance/$ over a CPU-based solution. 
 
-It is possible to use F1 to accelerate popular frameworks such as ```ffmpeg```. This is a very powerful proposition as it allows end-users to keep working with their preferred tools and APIs while transparently benefiting from acceleration.
+It is possible to use F1 to accelerate popular frameworks such as FFmpeg. This is a very powerful proposition as it allows end-users to keep working with their preferred tools and APIs while transparently benefiting from acceleration.
 
 In addition to video transcoding, F1 instances are very well suited to accelerate compute intensive workloads such as: genomics, financial analytics, big data analytics, security or machine learning.
 
