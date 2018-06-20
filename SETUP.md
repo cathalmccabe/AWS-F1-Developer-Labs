@@ -25,7 +25,7 @@ If you have not received that email, please contact an Xilinx event staff member
 
 #### Start a preconfigured EC2 F1 instance
 
-1. Open the above mentionned email containing your connection credentials.
+1. Open the above mentioned email containing your connection credentials.
 
 1. Click on the link to your preconfigured instance. 
     - You will be asked to sign-in before accessing your instance in the AWS EC2 Console.
